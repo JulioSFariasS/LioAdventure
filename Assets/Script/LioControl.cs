@@ -28,19 +28,22 @@ public class LioControl : MonoBehaviour
     private float _initialGravityScale;
     public bool caindo;
 
-    
+    public ParticleSystem attackParticles, glideParticles, normalParticles, poeiraGroundedParticles;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _initialGravityScale = rb.gravityScale;
+        StartCoroutine(GetGlide());
+        StartCoroutine(GetNormal());
+        StartCoroutine(GetPoeiraGrounded());
     }
 
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(posPe.position, checkRadius, whatIsGround);
         horizontalMove = Input.GetAxisRaw("Horizontal");
-
+        
         if (Input.GetButtonDown("Ataque") && !isAttacking)
         {
             StartCoroutine(GetAtaque());
@@ -122,7 +125,7 @@ public class LioControl : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, -glideFallSpeed);
             speed = glideMoveSpeed;
             movementSmoothing = 0.15f;
-            isGliding = 1f;
+            isGliding = 1f;            
         }
         else
         {
@@ -130,14 +133,45 @@ public class LioControl : MonoBehaviour
             speed = runSpeed;
             movementSmoothing = 0f;
             isGliding = 0f;
+            glideParticles.Stop();
         }
+    }
+
+    private IEnumerator GetGlide()
+    {
+        yield return new WaitUntil(() => isGliding == 1f && !isAttacking);
+        glideParticles.Play();
+        yield return new WaitUntil(() => isGliding == 0f || isAttacking);
+        glideParticles.Stop();
+        StartCoroutine(GetGlide());
     }
 
     private IEnumerator GetAtaque()
     {
         isAttacking = true;
+        attackParticles.Play();
         yield return new WaitForSeconds(0.25f);
         isAttacking = false;
+        attackParticles.Stop();
+    }
+
+    private IEnumerator GetNormal()
+    {
+        yield return new WaitUntil(()=> !isAttacking && isGliding==0f);
+        normalParticles.Play();
+        yield return new WaitUntil(() => isAttacking || isGliding == 1f);
+        normalParticles.Stop();
+        StartCoroutine(GetNormal());
+    }
+
+    private IEnumerator GetPoeiraGrounded()
+    {
+        yield return new WaitUntil(() => !isGrounded);
+        yield return new WaitUntil(() => isGrounded);
+        poeiraGroundedParticles.Play();
+        yield return new WaitForSeconds(0.1f);
+        poeiraGroundedParticles.Stop();
+        StartCoroutine(GetPoeiraGrounded());
     }
 
     public void OnLanding()

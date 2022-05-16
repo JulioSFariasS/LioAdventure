@@ -44,6 +44,15 @@ TextureImporter:
   - first:
       213: -5607309792825738375
     second: LioBase_13
+  - first:
+      213: -4920687658596259499
+    second: LioBase_14
+  - first:
+      213: 4096122364123108345
+    second: LioBase_15
+  - first:
+      213: -2803305836656690478
+    second: LioBase_16
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -446,6 +455,69 @@ TextureImporter:
       bones: []
       spriteID: 97b7d05c375de22b0800000000000000
       internalID: -5607309792825738375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_14
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 28
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 559a8ba35a436bbb0800000000000000
+      internalID: -4920687658596259499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_15
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 29
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f35716869958d830800000000000000
+      internalID: 4096122364123108345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_16
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 30
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da7c41b138a819d0800000000000000
+      internalID: -2803305836656690478
       vertices: []
       indices: 
       edges: []
