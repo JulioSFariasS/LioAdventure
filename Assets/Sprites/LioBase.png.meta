@@ -53,6 +53,21 @@ TextureImporter:
   - first:
       213: -2803305836656690478
     second: LioBase_16
+  - first:
+      213: 6986384585752052230
+    second: LioBase_17
+  - first:
+      213: -205978617879805854
+    second: LioBase_18
+  - first:
+      213: 2066933231901177639
+    second: LioBase_19
+  - first:
+      213: -1358708584108902475
+    second: LioBase_20
+  - first:
+      213: -8630476400698583941
+    second: LioBase_21
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -468,7 +483,7 @@ TextureImporter:
         width: 9
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -489,7 +504,7 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -510,7 +525,7 @@ TextureImporter:
         width: 3
         height: 3
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -518,6 +533,111 @@ TextureImporter:
       bones: []
       spriteID: 2da7c41b138a819d0800000000000000
       internalID: -2803305836656690478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_17
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 30
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 602040ae3cf94f060800000000000000
+      internalID: 6986384585752052230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_18
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 13
+        width: 42
+        height: 46
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 260c2f1d987342df0800000000000000
+      internalID: -205978617879805854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_19
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 7
+        width: 57
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7277be5c2d83fac10800000000000000
+      internalID: 2066933231901177639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_20
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 34
+        width: 8
+        height: 3
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b73ae2ddb5e42de0800000000000000
+      internalID: -1358708584108902475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LioBase_21
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 40
+        width: 4
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7418f590736a3880800000000000000
+      internalID: -8630476400698583941
       vertices: []
       indices: 
       edges: []
