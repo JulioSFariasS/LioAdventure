@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Hud : MonoBehaviour
 {
     public TextMeshProUGUI vidas;
+    public TextMeshProUGUI alienQtd;
     private GameSystem gameSystem;
 
     void Start()
@@ -16,6 +17,10 @@ public class Hud : MonoBehaviour
 
     void Update()
     {
-        vidas.text = "Life: " + gameSystem.vidas;
+        if(gameSystem!=null)
+        {
+            vidas.text = "Life: " + gameSystem.vidas;
+            alienQtd.text = "Aliens: " + gameSystem.alienQuantidade;
+        }
     }
 }

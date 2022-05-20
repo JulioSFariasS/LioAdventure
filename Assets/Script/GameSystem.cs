@@ -2,16 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameSystem : Singleton<GameSystem>
 {
     public int vidas;
+    public int alienQuantidade;
+    public int estrelasPegas;
+    public LioControl lioCtrl;
 
     void Start()
     {
-        if (base.SingletonStart())
+        if (SingletonStart())
         {
+            AjeitaCena();
         }
+    }
+
+    public IEnumerator MudaCena(string cena)
+    {
+        //AsyncOperation op = SceneManager.LoadSceneAsync("LoadingCena");
+
+        //while (!op.isDone)
+        //    yield return new WaitForEndOfFrame();
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(cena);
+
+        while (!op.isDone)
+            yield return new WaitForEndOfFrame();
+
+        AjeitaCena();
+    }
+
+    public void AjeitaCena()
+    {
+        switch(SceneManager.GetActiveScene().name)
+        {
+            case "SampleScene":
+                QuantidadeDeAliens();
+                estrelasPegas = 0;
+                vidas = 3;
+                break;
+        }
+        
+    }
+
+    public void SomaEstrelasPegas()
+    {
+        estrelasPegas++;
+        if (estrelasPegas == 3)
+        {
+            StartCoroutine(lioCtrl.VitoriaDeFase());
+            estrelasPegas = 3;
+        }
+    }
+
+    public void QuantidadeDeAliens()
+    {
+        List<GameObject> aliens = new List<GameObject>(GameObject.FindGameObjectsWithTag("Inimigo"));
+        alienQuantidade = aliens.Count;
+    }
+
+    public void QuantidadeDeAlienDiminui()
+    {
+        alienQuantidade--;
+        if (alienQuantidade < 0)
+        {
+            alienQuantidade = 0;
+        }
+    }
+
+    public void QuantidadeDeAlienAumenta()
+    {
+        alienQuantidade++;
     }
 
     public void LevarDano(LioControl lioCtrl ,int dano)

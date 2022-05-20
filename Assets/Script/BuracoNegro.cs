@@ -7,6 +7,7 @@ public class BuracoNegro : MonoBehaviour
     private Rigidbody2D rb;
     public float velocidade;
     public float duracao;
+    public float tamanhoFinalDeFase;
 
     private void Start()
     {
@@ -39,5 +40,15 @@ public class BuracoNegro : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         Destroy(gameObject);
+    }
+
+    public IEnumerator FinalDeFase()
+    {
+        while (transform.localScale.x < tamanhoFinalDeFase)
+        {
+            transform.localScale += new Vector3(0.02f, 0.02f, 0.02f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
     }
 }

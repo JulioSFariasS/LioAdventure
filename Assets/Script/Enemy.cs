@@ -42,8 +42,11 @@ public class Enemy : MonoBehaviour
     protected bool vulneravel = true;
     public BuracoNegro buracoNegro;
 
+    protected GameSystem gameSystem;
+
     protected void Start()
     {
+        gameSystem = GameSystem.getInstance();
         StartCoroutine(Iniciador());
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerCtrl = player.GetComponent<LioControl>();
@@ -131,6 +134,7 @@ public class Enemy : MonoBehaviour
         buracoNegro.StartaBuraco();
         buracoNegro.gameObject.transform.SetParent(null);
         yield return new WaitForSeconds(0.75f);
+        gameSystem.QuantidadeDeAlienDiminui();
         Destroy(gameObject);
     }
 

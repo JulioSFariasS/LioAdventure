@@ -39,9 +39,12 @@ public class LioControl : MonoBehaviour
     protected Shader shaderSpritesDefault;
     protected Color[] coresOriginais, coresOriginaisTranslucidas;
 
+    public EstrelasUniao estrelasUniao;
+
     void Start()
     {
         gameSystem = GameSystem.getInstance();
+        gameSystem.lioCtrl = this;
         rb = GetComponent<Rigidbody2D>();
         _initialGravityScale = rb.gravityScale;
         StartCoroutine(GetGlide());
@@ -196,9 +199,9 @@ public class LioControl : MonoBehaviour
     private IEnumerator GetNormal()
     {
         yield return new WaitUntil(()=> !isAttacking && isGliding==0f);
-        normalParticles.Play();
+        //normalParticles.Play();
         yield return new WaitUntil(() => isAttacking || isGliding == 1f);
-        normalParticles.Stop();
+        //normalParticles.Stop();
         StartCoroutine(GetNormal());
     }
 
@@ -230,7 +233,7 @@ public class LioControl : MonoBehaviour
     {
         if(collision.tag=="Finish")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameSystem.StartCoroutine(gameSystem.MudaCena(SceneManager.GetActiveScene().name));
         }
     }
 
@@ -320,5 +323,12 @@ public class LioControl : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(3, 8, false);
         vulneravel = true;
+    }
+
+    public IEnumerator VitoriaDeFase()
+    {
+        estrelasUniao.gameObject.transform.SetParent(null);
+        estrelasUniao.Iniciar();
+        yield return new WaitForSeconds(1);
     }
 }
