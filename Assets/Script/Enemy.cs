@@ -14,10 +14,10 @@ public class Enemy : MonoBehaviour
     public LayerMask whatIsGround;
     public float checkGroundRadius;
     public Transform posPe;
-    public Transform verificadorDeBorda;
+    public Transform verificadorDeBorda, verificadorDeBorda2;
     public float checkBordaRadius;
     public bool naBorda;
-    public Transform verificadorDeParede;
+    public Transform verificadorDeParede, verificadorDeParede2;
     public Transform verificadorDeOutroInimigo;
     public LayerMask inimigoLayer;
     public bool naParede;
@@ -64,8 +64,8 @@ public class Enemy : MonoBehaviour
     protected void Update()
     {
         isGrounded = Physics2D.OverlapCircle(posPe.position, checkGroundRadius, whatIsGround);
-        naBorda = !Physics2D.OverlapCircle(verificadorDeBorda.position, checkBordaRadius, whatIsGround);
-        naParede = Physics2D.OverlapCircle(verificadorDeParede.position, checkBordaRadius, whatIsGround);
+        naBorda = !Physics2D.OverlapCircle(verificadorDeBorda.position, checkBordaRadius, whatIsGround) && !Physics2D.OverlapCircle(verificadorDeBorda2.position, checkBordaRadius, whatIsGround);
+        naParede = Physics2D.OverlapCircle(verificadorDeParede.position, checkBordaRadius, whatIsGround) && Physics2D.OverlapCircle(verificadorDeParede2.position, checkBordaRadius, whatIsGround);
         noInimigo = Physics2D.OverlapCircle(verificadorDeOutroInimigo.position, 0.05f, inimigoLayer);
 
         if (vida <= 0 && !morreu)
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Finish")
+        if(collision.tag == "Respawn")
         {
             StartCoroutine(Morte());
         }

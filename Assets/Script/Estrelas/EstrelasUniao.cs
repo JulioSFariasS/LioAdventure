@@ -7,11 +7,13 @@ public class EstrelasUniao : MonoBehaviour
     public Rigidbody2D rbGeral, rbPreto, rbRosa, rbAzul;
     public FlutuarObj estrelaPreta, estrelaRosa, estrelaAzul;
     public EstrelaControl estrelaPretaCtrl, estrelaRosaCtrl, estrelaAzulCtrl;
+    public GameObject estrelaRoxa;
     public RodarObj velocidadeDeGiro;
     public BuracoNegro buracoNegro;
 
     private void Start()
     {
+        estrelaRoxa.SetActive(false);
         buracoNegro.gameObject.SetActive(false);
         rbGeral.gameObject.SetActive(false);
     }
@@ -35,16 +37,17 @@ public class EstrelasUniao : MonoBehaviour
         StartCoroutine(estrelaPretaCtrl.AumentaEstrela());
         StartCoroutine(estrelaRosaCtrl.AumentaEstrela());
         StartCoroutine(estrelaAzulCtrl.AumentaEstrela());
-        while(velocidadeDeGiro.velocidade < 30)
+        while (velocidadeDeGiro.velocidade < 30)
         {
             velocidadeDeGiro.velocidade += 1;
             yield return new WaitForSeconds(0.1f);
         }
-        buracoNegro.gameObject.SetActive(true);
-        StartCoroutine(buracoNegro.FinalDeFase());
         StartCoroutine(estrelaPretaCtrl.DiminuiMuitoEstrela());
         StartCoroutine(estrelaRosaCtrl.DiminuiMuitoEstrela());
         StartCoroutine(estrelaAzulCtrl.DiminuiMuitoEstrela());
+        estrelaRoxa.SetActive(true);
+        buracoNegro.gameObject.SetActive(true);
+        StartCoroutine(buracoNegro.FinalDeFase());
         yield return new WaitForSeconds(0.25f);
     }
 }

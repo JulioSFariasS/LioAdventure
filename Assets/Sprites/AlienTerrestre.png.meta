@@ -50,6 +50,18 @@ TextureImporter:
   - first:
       213: 3510074870095133023
     second: AlienTerrestre_0
+  - first:
+      213: -3545380465566601667
+    second: AlienTerrestre_1
+  - first:
+      213: -7253781768243547811
+    second: AlienTerrestre_2
+  - first:
+      213: -181505299345106401
+    second: AlienTerrestre_3
+  - first:
+      213: 7012176286760113532
+    second: AlienTerrestre_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -486,7 +498,7 @@ TextureImporter:
         width: 17
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -494,6 +506,90 @@ TextureImporter:
       bones: []
       spriteID: f59bb074f7a46b030800000000000000
       internalID: 3510074870095133023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlienTerrestre_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 11
+        width: 17
+        height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3e2b4430474ccec0800000000000000
+      internalID: -3545380465566601667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlienTerrestre_2
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3
+        width: 25
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5173a9f9e3655b90800000000000000
+      internalID: -7253781768243547811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlienTerrestre_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 3
+        width: 17
+        height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a1fa354e92b7df0800000000000000
+      internalID: -181505299345106401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlienTerrestre_4
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 1
+        width: 11
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7511c24e21405160800000000000000
+      internalID: 7012176286760113532
       vertices: []
       indices: 
       edges: []

@@ -10,6 +10,8 @@ public class GameSystem : Singleton<GameSystem>
     public int alienQuantidade;
     public int estrelasPegas;
     public LioControl lioCtrl;
+    public Hud hud;
+    public ParticleSystem particulasVitoria;
 
     void Start()
     {
@@ -19,13 +21,18 @@ public class GameSystem : Singleton<GameSystem>
         }
     }
 
+    public void ChamaVitoria()
+    {
+        hud.Vitoria();
+        particulasVitoria.Play();
+    }
+
     public IEnumerator MudaCena(string cena)
     {
         //AsyncOperation op = SceneManager.LoadSceneAsync("LoadingCena");
 
         //while (!op.isDone)
         //    yield return new WaitForEndOfFrame();
-
         AsyncOperation op = SceneManager.LoadSceneAsync(cena);
 
         while (!op.isDone)
@@ -40,11 +47,12 @@ public class GameSystem : Singleton<GameSystem>
         {
             case "SampleScene":
                 QuantidadeDeAliens();
+                particulasVitoria = Camera.main.transform.GetChild(0).GetComponent<ParticleSystem>();
+                hud = GameObject.Find("HUD").GetComponent<Hud>();
                 estrelasPegas = 0;
                 vidas = 3;
                 break;
-        }
-        
+        }   
     }
 
     public void SomaEstrelasPegas()
@@ -79,6 +87,7 @@ public class GameSystem : Singleton<GameSystem>
 
     public void LevarDano(LioControl lioCtrl ,int dano)
     {
+        Controle.SetVibra(1, 1, 1);
         vidas -= dano;
         if (vidas < 0)
         {

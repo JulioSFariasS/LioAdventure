@@ -6,6 +6,7 @@ public class EnemyRaivoso : Enemy
 {
     public bool raivoso;
     public bool frustrado;
+    public bool duvida;
     public float forcaDePulo;
 
     new void Update()
@@ -25,11 +26,12 @@ public class EnemyRaivoso : Enemy
         {
             if (raivoso)
             {
-                if (player.transform.position.x < rb.position.x)
+                if (player.transform.position.x < rb.position.x - 0.1f)
                 {
                     movimentoHorizontal = -1f;
                 }
                 else
+                if (player.transform.position.x > rb.position.x + 0.1f)
                 {
                     movimentoHorizontal = 1f;
                 }
@@ -50,8 +52,8 @@ public class EnemyRaivoso : Enemy
                     anim.SetBool("Raivoso", false);
                     velocidade = 0;
                 }
-                
-                if(!frustrado && velocidade==0)
+
+                if (!frustrado && !duvida && velocidade==0)
                 {
                     anim.SetBool("Raivoso", true);
                     velocidade = 40;
@@ -74,7 +76,7 @@ public class EnemyRaivoso : Enemy
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Finish")
+        if (collision.tag == "Respawn")
         {
             StartCoroutine(Morte());
         }
