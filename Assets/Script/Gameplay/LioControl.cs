@@ -65,10 +65,7 @@ public class LioControl : MonoBehaviour
         vulneravel = true;
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
-        partesCorpoSpr = GetComponentsInChildren<SpriteRenderer>();
-        coresOriginais = new Color[partesCorpoSpr.Length];
-        coresOriginaisTranslucidas = new Color[partesCorpoSpr.Length];
-        CoresOriginais();
+        ResetDeCores();
     }
 
     void Update()
@@ -294,6 +291,22 @@ public class LioControl : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Escuro")
+        {
+            gameSystem.Escuro(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Escuro")
+        {
+            gameSystem.Escuro(false);
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Inimigo" && vulneravel)
@@ -302,6 +315,14 @@ public class LioControl : MonoBehaviour
             Enemy inimigo = collision.gameObject.GetComponent<Enemy>();
             gameSystem.LevarDano(this,inimigo.dano);
         }
+    }
+
+    protected void ResetDeCores()
+    {
+        partesCorpoSpr = GetComponentsInChildren<SpriteRenderer>();
+        coresOriginais = new Color[partesCorpoSpr.Length];
+        coresOriginaisTranslucidas = new Color[partesCorpoSpr.Length];
+        CoresOriginais();
     }
 
     protected void CoresOriginais()
@@ -363,6 +384,7 @@ public class LioControl : MonoBehaviour
     public IEnumerator PiscaBranco()
     {
         //SpriteBranca();
+        ResetDeCores();
         visualAnim.SetBool("Dano", true);
         damageParticles.Play();
         Time.timeScale = 0;

@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviour
         //Pisca branco
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
-
     }
 
     protected void Update()

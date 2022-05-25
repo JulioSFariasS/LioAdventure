@@ -12,8 +12,8 @@ public class EnemyRaivoso : Enemy
     new void Update()
     {
         isGrounded = Physics2D.OverlapCircle(posPe.position, checkGroundRadius, whatIsGround);
-        naBorda = !Physics2D.OverlapCircle(verificadorDeBorda.position, checkBordaRadius, whatIsGround);
-        naParede = Physics2D.OverlapCircle(verificadorDeParede.position, checkBordaRadius, whatIsGround);
+        naBorda = !Physics2D.OverlapCircle(verificadorDeBorda.position, checkBordaRadius, whatIsGround) && !Physics2D.OverlapCircle(verificadorDeBorda2.position, checkBordaRadius, whatIsGround);
+        naParede = Physics2D.OverlapCircle(verificadorDeParede.position, checkBordaRadius, whatIsGround) && Physics2D.OverlapCircle(verificadorDeParede2.position, checkBordaRadius, whatIsGround);
         noInimigo = Physics2D.OverlapCircle(verificadorDeOutroInimigo.position, 0.05f, inimigoLayer);
 
         if (vida <= 0 && !morreu)

@@ -12,6 +12,7 @@ public class GameSystem : Singleton<GameSystem>
     public LioControl lioCtrl;
     public Hud hud;
     public ParticleSystem particulasVitoria;
+    private Animator escuroAnim; 
 
     void Start()
     {
@@ -49,6 +50,7 @@ public class GameSystem : Singleton<GameSystem>
                 QuantidadeDeAliens();
                 particulasVitoria = Camera.main.transform.GetChild(0).GetComponent<ParticleSystem>();
                 hud = GameObject.Find("HUD").GetComponent<Hud>();
+                escuroAnim = GameObject.Find("Escuro").GetComponent<Animator>();
                 estrelasPegas = 0;
                 vidas = 3;
                 break;
@@ -87,7 +89,7 @@ public class GameSystem : Singleton<GameSystem>
 
     public void LevarDano(LioControl lioCtrl ,int dano)
     {
-        Controle.SetVibra(1, 1, 1);
+        Controle.SetVibra(1, 1, 0.05f);
         vidas -= dano;
         if (vidas < 0)
         {
@@ -121,5 +123,10 @@ public class GameSystem : Singleton<GameSystem>
             yield return new WaitForSecondsRealtime(0.01f);
         }
         cineFraming.m_ScreenX = 0.5f;
+    }
+
+    public void Escuro(bool escuro)
+    {
+        escuroAnim.SetBool("Escuro", escuro);
     }
 }

@@ -12,6 +12,7 @@ public class ArmaLioCollider : MonoBehaviour
     {
         trigger = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(7, 9);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
