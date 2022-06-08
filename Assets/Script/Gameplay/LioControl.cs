@@ -5,42 +5,72 @@ using UnityEngine.SceneManagement;
 
 public class LioControl : MonoBehaviour
 {
-    public Rigidbody2D rb, rbSeguir;
-    public Animator visualAnim;
-    public Collider2D colisor, trigger, colisorArma;
+    [Header("Variaveis de movimento")]
     private float horizontalMove = 0f;
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     private Vector3 m_Velocity = Vector3.zero;
     public float runSpeed = 2f;
+    private float speed;
+
+    [Header("Materiais")]
+    [SerializeField] private PhysicsMaterial2D noFrictionMaterial;
+    [SerializeField] private PhysicsMaterial2D frictionMaterial;
+
+    [Header("Variaveis de pulo")]
+    public float jumpForce = 2f;
+    public bool isJumping;
+
+    [Header("Variaveis de planar")]
     public float glideFallSpeed;
     public float glideMoveSpeed;
-    private float speed;
-    public float jumpForce = 2f;
-    public bool canJump=true, isJumping, isFalling, isGrounded, isAttacking; 
     public float isGliding;
+    public bool caindo;
+    private float _initialGravityScale;
+
+    [Header("Variaveis de colisão")]
+    public bool isGrounded;
+    public bool isOnSlope;
+    private bool isOnPlatform;
+    private Vector2 perpendicularSpeed;
+    public Transform posPe;
+    public Transform posPeEsq;
+    public Transform posPeDir;
+    public float checkRadius;
+    public float checkSlopeDistance;
+    private float slopeAngle;
+    public LayerMask whatIsGround;
+    public bool vulneravel;
+
+    [Header("Variaveis de ataque")]
+    public bool isAttacking;
     public float attackCooldown;
 
-    public Transform posPe, posPeEsq, posPeDir;
-    public float checkRadius;
-    public LayerMask whatIsGround;
-    public float jumpTime;
-    public float jumpTimeCounter;
-
-    private float _initialGravityScale;
-    public bool caindo;
-
-    private GameSystem gameSystem;
-
-    public ParticleSystem attackParticles, glideParticles, normalParticles, poeiraGroundedParticles, damageParticles;
-
-    public bool vulneravel;
+    [Header("Componentes")]
+    public Rigidbody2D rb, rbSeguir;
+    public Animator visualAnim;
+    public Collider2D colisor;
+    public Collider2D trigger;
+    public Collider2D colisorArma;
+    public ParticleSystem attackParticles;
+    public ParticleSystem glideParticles;
+    public ParticleSystem normalParticles;
+    public ParticleSystem poeiraGroundedParticles;
+    public ParticleSystem damageParticles;
     protected SpriteRenderer[] partesCorpoSpr;
+
+    [Header("Variaveis de cor")]
     protected Shader shaderGUItext;
     protected Shader shaderSpritesDefault;
-    protected Color[] coresOriginais, coresOriginaisTranslucidas;
+    protected Color[] coresOriginais;
+    protected Color[] coresOriginaisTranslucidas;
 
+    [Header("Controladores ")]
+    private GameSystem gameSystem;
+
+    [Header("Decisivos")]
+    public bool morte;
+    public bool vitoria;
     public EstrelasUniao estrelasUniao;
-    public bool morte, vitoria;
 
     PlayerControl controls;
     Vector2 movimento;
@@ -72,15 +102,16 @@ public class LioControl : MonoBehaviour
     {
         if (!morte && !vitoria)
         {
-            
+
             isGrounded = (Physics2D.OverlapCircle(posPe.position, checkRadius, whatIsGround) || Physics2D.OverlapCircle(posPeDir.position, checkRadius, whatIsGround) || Physics2D.OverlapCircle(posPeEsq.position, checkRadius, whatIsGround))
                && !isJumping;
+            DetectSlope();
+
 
             PegaInput();
 
             horizontalMove = movimento.x;
 
-            
             if (Controle.attackDown && !isAttacking && attackCooldown == 0)
             {
                 StartCoroutine(GetAtaque());
@@ -123,7 +154,6 @@ public class LioControl : MonoBehaviour
             Planar();
         }
 
-
         AnimaVisual();
     }
 
@@ -154,8 +184,8 @@ public class LioControl : MonoBehaviour
     {
         if (!morte && !vitoria)
         {
-            Vector3 targetVelocity = new Vector2(horizontalMove * runSpeed * Time.fixedDeltaTime, rb.velocity.y);
-            rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref m_Velocity, movementSmoothing);
+                Vector3 targetVelocity = new Vector2(horizontalMove * runSpeed * Time.fixedDeltaTime, rb.velocity.y);
+                rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref m_Velocity, movementSmoothing);
         }
         else
         if (vitoria)
@@ -166,12 +196,33 @@ public class LioControl : MonoBehaviour
         }
     }
 
+    private void DetectSlope()
+    {
+        RaycastHit2D hitSlope = Physics2D.Raycast(transform.position, Vector2.down, checkSlopeDistance, whatIsGround);
+
+        if (hitSlope)
+        {
+            perpendicularSpeed = Vector2.Perpendicular(hitSlope.normal).normalized;
+            slopeAngle = Vector2.Angle(hitSlope.normal, Vector2.up);
+            isOnSlope = slopeAngle != 0;
+        }
+
+        if ((isOnSlope || isOnPlatform) && horizontalMove==0 )
+        {
+            rb.sharedMaterial = frictionMaterial;
+        }
+        else
+        {
+            rb.sharedMaterial = noFrictionMaterial;
+        }
+    }
+
     public void Pular()
     {
         if (isGrounded && Controle.jumpDown)
         {
             isJumping = true;
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
         
         if (Controle.jumpUp)
@@ -188,14 +239,12 @@ public class LioControl : MonoBehaviour
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(rb.velocity.x, -glideFallSpeed);
             speed = glideMoveSpeed;
-            movementSmoothing = 0.15f;
             isGliding = 1f;
         }
         else
         {
             rb.gravityScale = _initialGravityScale;
             speed = runSpeed;
-            movementSmoothing = 0f;
             isGliding = 0f;
             glideParticles.Stop();
         }
@@ -289,6 +338,8 @@ public class LioControl : MonoBehaviour
         {
             gameSystem.StartCoroutine(gameSystem.MudaCena(SceneManager.GetActiveScene().name));
         }
+
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -311,9 +362,37 @@ public class LioControl : MonoBehaviour
     {
         if (collision.gameObject.tag == "Inimigo" && vulneravel)
         {
+            if (rb.position.y > collision.gameObject.GetComponent<Enemy>().corpo.bounds.max.y)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            }
+            else
+            {
+                vulneravel = false;
+                Enemy inimigo = collision.gameObject.GetComponent<Enemy>();
+                gameSystem.LevarDano(this, inimigo.dano);
+            }
+        }
+
+        if (collision.gameObject.tag == "ArmaInimigo" && vulneravel)
+        {
             vulneravel = false;
             Enemy inimigo = collision.gameObject.GetComponent<Enemy>();
-            gameSystem.LevarDano(this,inimigo.dano);
+            gameSystem.LevarDano(this, inimigo.dano);
+        }
+
+        if (collision.gameObject.name == "PlataformaMovel" && rb.position.y > collision.gameObject.GetComponent<PlataformaMovel>().GetCorpoSpr().bounds.max.y)
+        {
+            isOnPlatform = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "PlataformaMovel")
+        {
+            isOnPlatform = false;
         }
     }
 
@@ -388,7 +467,7 @@ public class LioControl : MonoBehaviour
         visualAnim.SetBool("Dano", true);
         damageParticles.Play();
         Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(0.05f);
+        yield return new WaitForSecondsRealtime(0.1f);
         Physics2D.IgnoreLayerCollision(3, 8);
         damageParticles.Stop();
         Time.timeScale = 1;

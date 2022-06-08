@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(posPe.position, checkGroundRadius, whatIsGround);
         naBorda = !Physics2D.OverlapCircle(verificadorDeBorda.position, checkBordaRadius, whatIsGround) && !Physics2D.OverlapCircle(verificadorDeBorda2.position, checkBordaRadius, whatIsGround);
         naParede = Physics2D.OverlapCircle(verificadorDeParede.position, checkBordaRadius, whatIsGround) && Physics2D.OverlapCircle(verificadorDeParede2.position, checkBordaRadius, whatIsGround);
-        noInimigo = Physics2D.OverlapCircle(verificadorDeOutroInimigo.position, 0.05f, inimigoLayer);
+        noInimigo = Physics2D.OverlapCircle(verificadorDeOutroInimigo.position, 0.01f, inimigoLayer);
 
         if (vida <= 0 && !morreu)
         {
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
 
         if (!morreu)
         {
-            if ((naBorda && isGrounded) || naParede || noInimigo)
+            if (naParede || noInimigo)
             {
                 movimentoHorizontal *= -1;
             }
@@ -121,13 +121,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     protected IEnumerator Morte()
     {
         rb.isKinematic = true;
         velocidade = 0;
         rb.velocity = new Vector2(0, 0);
-        colisor.enabled = false;
+        Collider2D[] colisores = GetComponents<Collider2D>();
+        foreach(Collider2D col in colisores)
+        {
+            col.enabled = false;
+        }
         anim.SetBool("Morreu", morreu);
         buracoNegro.gameObject.SetActive(true);
         buracoNegro.StartaBuraco();

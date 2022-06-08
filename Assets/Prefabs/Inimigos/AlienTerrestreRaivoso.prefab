@@ -122,7 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1227179571762857042}
   - component: {fileID: 1227179571762857043}
-  - component: {fileID: 1227179571762857040}
+  - component: {fileID: 1436908966308422947}
+  - component: {fileID: 3564282518036516209}
   - component: {fileID: 4014923305864282929}
   m_Layer: 8
   m_Name: AlienTerrestreRaivoso
@@ -174,8 +175,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &1227179571762857040
-CapsuleCollider2D:
+--- !u!61 &1436908966308422947
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -187,9 +188,35 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03456226}
-  m_Size: {x: 0.17240886, y: 0.23969167}
-  m_Direction: 0
+  m_Offset: {x: 0.002058506, y: 0.015439674}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.15596294, y: 0.120966405}
+  m_EdgeRadius: 0
+--- !u!58 &3564282518036516209
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227179571762857006}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.09530583}
+  serializedVersion: 2
+  m_Radius: 0.05269763
 --- !u!114 &4014923305864282929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +255,7 @@ MonoBehaviour:
   rb: {fileID: 1227179571762857043}
   anim: {fileID: 1227179573245118439}
   corpo: {fileID: 1227179572737880953}
-  colisor: {fileID: 1227179571762857040}
+  colisor: {fileID: 0}
   movimentoHorizontal: -1
   movementSmoothing: 0
   forcaDeRecuo: 1

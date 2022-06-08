@@ -90,6 +90,7 @@ public class EnemyForte : Enemy
     {
         yield return new WaitUntil(() => corpo.isVisible);
         iniciado = true;
+        yield return new WaitForSeconds(frequenciaDeAtaque);
         StartCoroutine(Ataca());
     }
 

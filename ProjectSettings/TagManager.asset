@@ -7,6 +7,7 @@ TagManager:
   - ArmaLio
   - Inimigo
   - Escuro
+  - ArmaInimigo
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2068020043
+    locked: 0
   - name: Escondidos
     uniqueID: 2470884255
+    locked: 0
+  - name: Inimigos
+    uniqueID: 2485504067
+    locked: 0
+  - name: Player
+    uniqueID: 427152407
     locked: 0

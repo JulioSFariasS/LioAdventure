@@ -96,7 +96,7 @@ public class GameSystem : Singleton<GameSystem>
             vidas = 0;
         }
         StartCoroutine(lioCtrl.PiscaBranco());
-        StartCoroutine(SacodeCamera());
+        //StartCoroutine(SacodeCamera());
     }
 
     public IEnumerator SacodeCamera()

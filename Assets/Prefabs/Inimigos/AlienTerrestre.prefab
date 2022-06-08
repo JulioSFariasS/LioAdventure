@@ -529,7 +529,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8856355423664613602}
   - component: {fileID: 8856355423664613603}
-  - component: {fileID: 8856355423664613600}
+  - component: {fileID: 8809325386950553629}
+  - component: {fileID: 2587119180611733205}
   - component: {fileID: 8856355423664613601}
   m_Layer: 8
   m_Name: AlienTerrestre
@@ -581,8 +582,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &8856355423664613600
-CapsuleCollider2D:
+--- !u!58 &8809325386950553629
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -594,9 +595,35 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03456226}
-  m_Size: {x: 0.17240886, y: 0.23969167}
-  m_Direction: 0
+  m_Offset: {x: 0, y: -0.09865087}
+  serializedVersion: 2
+  m_Radius: 0.049881876
+--- !u!61 &2587119180611733205
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8856355423664613606}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000009536743, y: 0.016212136}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.15696907, y: 0.13381034}
+  m_EdgeRadius: 0
 --- !u!114 &8856355423664613601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,7 +662,7 @@ MonoBehaviour:
   rb: {fileID: 8856355423664613603}
   anim: {fileID: 8856355423628679932}
   corpo: {fileID: 8856355424238716617}
-  colisor: {fileID: 8856355423664613600}
+  colisor: {fileID: 0}
   movimentoHorizontal: -1
   movementSmoothing: 0
   forcaDeRecuo: 1
@@ -936,6 +963,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8856355424238716622}
   - component: {fileID: 8856355424238716617}
+  - component: {fileID: 8931894522263124729}
   m_Layer: 0
   m_Name: Corpo
   m_TagString: Untagged
@@ -1010,6 +1038,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8931894522263124729
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8856355424238716623}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8856355424413750319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8856355424713795908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.207, y: -0.061, z: 0}
+  m_LocalPosition: {x: -0.123, y: -0.061, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 8856355423664613602}
