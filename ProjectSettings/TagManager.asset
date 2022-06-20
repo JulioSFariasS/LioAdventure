@@ -51,6 +51,9 @@ TagManager:
   - name: Escondidos
     uniqueID: 2470884255
     locked: 0
+  - name: ParticulasGlow
+    uniqueID: 1250338389
+    locked: 0
   - name: Inimigos
     uniqueID: 2485504067
     locked: 0

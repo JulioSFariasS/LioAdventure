@@ -30,11 +30,11 @@ public class SpawnEstrela : MonoBehaviour
                     {
                         case 0:
                             var objRosa = Instantiate(estrelaRosa, posAtual, Quaternion.identity);
-                            objRosa.GetComponent<Estrela>().movimento.x = -1;
+                            objRosa.GetComponent<Flutuantes>().posBase.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 360);
                             break;
                         case 1:
                             var objPreto = Instantiate(estrelaPreta, posAtual, Quaternion.identity);
-                            objPreto.GetComponent<Estrela>().movimento.x = -1;
+                            objPreto.GetComponent<Flutuantes>().posBase.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 360);
                             break;
                     }
                     break;

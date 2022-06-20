@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LuzesAlien
+  m_Name: EstrelaPreta
   m_Shader: {fileID: -6465566751694194690, guid: bf3f0ad7684770446bb4398db90572e9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -41,7 +41,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - Color_5a3e50b6f88b4cc9aa919a443c7b2943: {r: 766.9961, g: 0, b: 23.0009, a: 0}
-    - _Color: {r: 0.7490196, g: 0.7137255, b: 0, a: 0}
-    - _Cor: {r: 337.7939, g: 0, b: 17.051155, a: 0}
+    - Color_0d92bfef39a44b0986565a68b300d719: {r: 1, g: 1, b: 1, a: 0}
+    - Color_5a3e50b6f88b4cc9aa919a443c7b2943: {r: 206.80785, g: 0, b: 207.81177, a: 0}
+    - _Color: {r: 4, g: 3.545098, b: 0, a: 0}
+    - _ColorRGB: {r: 1, g: 1, b: 1, a: 0}
+    - _Cor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MiniAlien : MonoBehaviour
 {
     [SerializeField] private int vida;
+    [SerializeField] private bool invencivel;
     [SerializeField] private float velocidade;
     [SerializeField] private Vector3 direcao;
     private Rigidbody2D rb;
@@ -52,7 +53,7 @@ public class MiniAlien : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "ArmaLio")
+        if (collision.tag == "ArmaLio" && sprCorpo.isVisible && !invencivel)
         {
             StartCoroutine(GetComponent<PiscarBranco>().PiscaBranco());
             vida--;

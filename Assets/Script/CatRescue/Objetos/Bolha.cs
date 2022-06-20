@@ -32,9 +32,9 @@ public class Bolha : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = chefeEnfurecido ? normalPodre : normal;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if(agarrou && !player.GetComponent<LioController>().GetSuper())
+        if(agarrou && (!player.GetComponent<LioController>().GetSuper() || !player.GetComponent<LioController>().GetVulneravel()))
         {
             agarrou = false;
             StopAllCoroutines();

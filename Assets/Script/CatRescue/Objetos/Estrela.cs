@@ -26,9 +26,9 @@ public class Estrela : MonoBehaviour
             case "Azul": anim.SetBool("Azul", true); name = "EstrelaAzul"; break;
         }
 
-        StartCoroutine(DestroiForaDaCamera());
+        //StartCoroutine(DestroiForaDaCamera());
     }
-
+    /*
     private void Update()
     {
         tempoParaSeguir += Time.deltaTime;
@@ -65,5 +65,5 @@ public class Estrela : MonoBehaviour
         yield return new WaitUntil(() => !spr.isVisible);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
-    }
+    }*/
 }

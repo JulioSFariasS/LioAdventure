@@ -14,6 +14,36 @@ TextureImporter:
   - first:
       213: 4021833288090268768
     second: ArmaBolha_3
+  - first:
+      213: -8342142964735058673
+    second: ArmaBolha_4
+  - first:
+      213: 9015079849975679020
+    second: ArmaBolha_5
+  - first:
+      213: 4608180158254526758
+    second: ArmaBolha_6
+  - first:
+      213: -8961756141669703493
+    second: ArmaBolha_7
+  - first:
+      213: -6763736628153784591
+    second: ArmaBolha_8
+  - first:
+      213: -6785197647365584658
+    second: ArmaBolha_9
+  - first:
+      213: 6597813599000587689
+    second: ArmaBolha_10
+  - first:
+      213: 4186451313323428868
+    second: ArmaBolha_11
+  - first:
+      213: 4182896985705638733
+    second: ArmaBolha_12
+  - first:
+      213: 4553905632298796580
+    second: ArmaBolha_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -177,7 +207,7 @@ TextureImporter:
         width: 14
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,7 +228,7 @@ TextureImporter:
         width: 14
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -206,6 +236,216 @@ TextureImporter:
       bones: []
       spriteID: 0643672211c60d730800000000000000
       internalID: 4021833288090268768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_4
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 35
+        width: 12
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0d51711c21ca3c80800000000000000
+      internalID: -8342142964735058673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_5
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 28
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c28059f0c5ffb1d70800000000000000
+      internalID: 9015079849975679020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_6
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 21
+        width: 2
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 621b3c1507b83ff30800000000000000
+      internalID: 4608180158254526758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_7
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 14
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb02a14454271a380800000000000000
+      internalID: -8961756141669703493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_8
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 7
+        width: 2
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6689c5f516222a0800000000000000
+      internalID: -6763736628153784591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_9
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 27
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee845f170b226d1a0800000000000000
+      internalID: -6785197647365584658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_10
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 12
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9adeba6f284209b50800000000000000
+      internalID: 6597813599000587689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_11
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 27
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40c4c18e943491a30800000000000000
+      internalID: 4186451313323428868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_12
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 12
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b690585a2ac0a30800000000000000
+      internalID: 4182896985705638733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmaBolha_13
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 27
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42602d18b09b23f30800000000000000
+      internalID: 4553905632298796580
       vertices: []
       indices: 
       edges: []

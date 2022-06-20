@@ -9,11 +9,16 @@ public class LioController : MonoBehaviour
     private CapsuleCollider2D colisor;
 
     [SerializeField] private float velocidade;
+    [SerializeField] private float velocidadeBoost;
+    [SerializeField] private float tempoDeBoost;
     private Vector2 movimento;
     private bool vulneravel=true;
     private bool super;
     private bool preso;
     private bool confuso;
+    private bool boost;
+    private Vector2 boostDir;
+    private float boostCont;
     //private bool morreu = false;
 
     [SerializeField] private int superQuantidade;
@@ -29,7 +34,7 @@ public class LioController : MonoBehaviour
     [SerializeField] private float tiroDelay;
     private float tiroContador;
 
-    private SpriteRenderer[] partesCorpoSpr;
+    [SerializeField] private SpriteRenderer[] partesCorpoSpr;
     [SerializeField] private Material materialPiscaBranco;
     [SerializeField] private Material materialPixelSnap;
     private Material[] materialBase;
@@ -43,6 +48,7 @@ public class LioController : MonoBehaviour
     [SerializeField] private Color corPreta;
     [SerializeField] private ParticleSystem estrelasPretasParticulas;
     [SerializeField] private ParticleSystem danoParticulas;
+    [SerializeField] private ParticleSystem boostParticulas;
 
     PlayerControl controle;
 
@@ -62,6 +68,7 @@ public class LioController : MonoBehaviour
         StartCores();
         StartCoroutine(ControlaParticulasEstrelaPreta());
         StartCoroutine(ControlaParticulasTiroDisponivel());
+        StartCoroutine(ControlaParticulasBoost());
     }
 
     private void Update()
@@ -69,6 +76,22 @@ public class LioController : MonoBehaviour
         PegaInput();
 
         SuperForma();
+
+        GameController.getInstance().AtivaOuDesativaGameOver(!super);
+
+        if (!boost)
+        {
+            boostDir = movimento;
+        }
+        else
+        {
+            boostCont += Time.deltaTime;
+            if (boostCont > tempoDeBoost)
+            {
+                boost = false;
+                boostCont = 0;
+            }
+        }
 
         if (!preso)
         {
@@ -93,7 +116,11 @@ public class LioController : MonoBehaviour
                 case false:
                     if (!confuso)
                     {
-                        rb.velocity = movimento.normalized * velocidade * Time.fixedDeltaTime;
+                        switch (boost)
+                        {
+                            case false: rb.velocity = movimento.normalized * velocidade * Time.fixedDeltaTime; break;
+                            case true: rb.velocity = boostDir.normalized * velocidadeBoost * Time.fixedDeltaTime; break;
+                        }
                     }
                     else
                     {
@@ -133,7 +160,7 @@ public class LioController : MonoBehaviour
             GameController.getInstance().StartCoroutine(GameController.getInstance().MudaCena("AlienVerde"));
         }
         else
-        if (collision.name == "BolhaAlien" && !preso && super)
+        if (collision.name == "BolhaAlien" && !preso && super && vulneravel)
         {
             StartCoroutine(Prender());
             if (collision.GetComponent<Bolha>().GetEnfurecido() && vulneravel)
@@ -145,10 +172,10 @@ public class LioController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag=="Inimigo" && vulneravel && super)
+        if((collision.CompareTag("Inimigo") || collision.CompareTag("ArmaInimigo")) && vulneravel && super)
         {
             TomaDano();
-        }    
+        }
     }
 
     private void TomaDano()
@@ -157,6 +184,11 @@ public class LioController : MonoBehaviour
         StartCoroutine(PiscaBranco());
         superQuantidade -= 5;
         danoParticulas.Play();
+
+        if (preso)
+        {
+            AjustarRotacao();
+        }
 
         if (superQuantidade > 0)
         {
@@ -266,6 +298,12 @@ public class LioController : MonoBehaviour
         {
             tiroContador = tiroDelay;
         }
+
+        if(Controle.jumpDown && !boost && movimento!=Vector2.zero && super)
+        {
+            boost = true;
+            boostCont = 0;
+        }
     }
 
     private void AtualizaHud()
@@ -289,7 +327,7 @@ public class LioController : MonoBehaviour
 
     private void ResetDeCores()
     {
-        partesCorpoSpr = GetComponentsInChildren<SpriteRenderer>();
+        //partesCorpoSpr = GetComponentsInChildren<SpriteRenderer>();
         materialBase = new Material[partesCorpoSpr.Length];
         coresOriginais = new Color[partesCorpoSpr.Length];
         coresOriginaisTranslucidas = new Color[partesCorpoSpr.Length];
@@ -339,7 +377,7 @@ public class LioController : MonoBehaviour
                 coresPretas[i] = Color.white;
             }
 
-            if (spr.gameObject.name == "Visual")
+            if (spr.gameObject.name == "GuardaChuva_0")
             {
                 coresPretas[i] = Color.white;
             }
@@ -456,11 +494,20 @@ public class LioController : MonoBehaviour
 
     private IEnumerator ControlaParticulasTiroDisponivel()
     {
-        yield return new WaitUntil(() => super && tiroQuantidade>0);
+        yield return new WaitUntil(() => super);
         tiroDisponivelParticulas.Play();
-        yield return new WaitUntil(() => !super || tiroQuantidade == 0);
+        yield return new WaitUntil(() => !super);
         tiroDisponivelParticulas.Stop();
         StartCoroutine(ControlaParticulasTiroDisponivel());
+    }
+
+    private IEnumerator ControlaParticulasBoost()
+    {
+        yield return new WaitUntil(() => boost);
+        boostParticulas.Play();
+        yield return new WaitUntil(() => !boost);
+        boostParticulas.Stop();
+        StartCoroutine(ControlaParticulasBoost());
     }
 
     private IEnumerator SuperContador()
