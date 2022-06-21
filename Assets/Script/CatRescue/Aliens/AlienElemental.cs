@@ -11,6 +11,7 @@ public class AlienElemental : MonoBehaviour
 
     [Header("Status")]
     [SerializeField] private int vida;
+    private bool morreu;
     private int vidaTotal;
     private int vidaEstagios=1;
     private bool enfureceu;
@@ -19,10 +20,6 @@ public class AlienElemental : MonoBehaviour
     [Header("Movimento")]
     [SerializeField] private float velNormal;
     private Flutuantes flutuantes;
-
-    [Header("Ataques")]
-    [SerializeField] private bool jogandoBolhas;
-    [SerializeField] private bool jogandoFogo;
 
     //Ações
     /* 0 - parado
@@ -52,6 +49,11 @@ public class AlienElemental : MonoBehaviour
     [SerializeField] private AudioClip invocaMiniSom;
     [SerializeField] private AudioClip soltaBolhaSom;
 
+    [Header("Particulas")]
+    [SerializeField] private ParticleSystem danificadoUmParticulas;
+    [SerializeField] private ParticleSystem danificadoDoisParticulas;
+    [SerializeField] private ParticleSystem danificadoTresParticulas;
+
 
     private void Start()
     {
@@ -65,6 +67,15 @@ public class AlienElemental : MonoBehaviour
 
     private void Update()
     {
+        if (morreu)
+        {
+            morreu = false;
+            StopAllCoroutines();
+            acao = 0;
+            GameController.getInstance().StartCoroutine(GameController.getInstance().DerrotaChefe("Elemental", gameObject.transform, "AlienVerde"));
+            anim.SetTrigger("Morre");
+        }
+
         switch (acao)
         {
             case 0: flutuantes.velocidade = 0;
@@ -147,26 +158,23 @@ public class AlienElemental : MonoBehaviour
 
     public void AtiraFolhasPeloAnim(int i)
     {
-        GameObject obj = null;
         switch (i)
         {
             case 1:
-                obj = Instantiate(folha, maoDir.position, Quaternion.identity);
-                obj.GetComponent<ObjMovel>().SetInfo(3, 360);
+                Instantiate(folha, maoDir.position, Quaternion.identity);
                 break;
             case 2:
-                obj = Instantiate(folha, maoEsq.position, Quaternion.identity);
-                obj.GetComponent<ObjMovel>().SetInfo(3, 360);
+                Instantiate(folha, maoEsq.position, Quaternion.identity);
                 break;
         }
     }
 
     private IEnumerator AtiraMeteoro()
     {
-        bichoPedra.GetComponent<Animator>().SetTrigger("AbreBoca");
+        //bichoPedra.GetComponent<Animator>().SetTrigger("AbreBoca");
         yield return new WaitForSeconds(0.5f);
-        var obj = Instantiate(meteoro, new Vector3(bichoPedra.position.x+0.3f,bichoPedra.position.y+ 0.163f), Quaternion.identity);
-        obj.GetComponent<ObjMovel>().SetInfo(0.9f, new Vector2(-1, 0), 90);
+        var obj = Instantiate(meteoro, new Vector3(bichoPedra.position.x,bichoPedra.position.y- 0.163f), Quaternion.identity);
+        obj.GetComponent<ObjMovel>().SetInfo(0.9f, new Vector2(-1, 0), 0);
     }
 
     private IEnumerator AtiraBolhas()
@@ -185,39 +193,6 @@ public class AlienElemental : MonoBehaviour
         StartCoroutine(AtiraBolhas());
     }
 
-    private IEnumerator InvocaFogo()
-    {
-        jogandoFogo = true;
-        anim.SetTrigger("Invoca");
-        yield return new WaitForSeconds(1);
-        Vector3 posAtual = transform.position;
-        float somaOuSubtraiY = posAtual.y < 0 ? 1f : -1f;
-        float somaOuSubtraiX = Random.Range(1f, 2f);
-        int quant = !enfurecido ? 10 : 20;
-        int i = 0;
-        float forca = !enfurecido ? 0.3f : 0.4f;
-        float velocidadeSeno = !enfurecido ? 3 : 4f;
-        float velocidadeBase = !enfurecido ? 1 : 1.5f;
-
-        while (i < quant)
-        {
-            var obj = Instantiate(fogo, new Vector3(posAtual.x + somaOuSubtraiX, posAtual.y), Quaternion.identity);
-            int direcao = (transform.eulerAngles.y == 0) ? -1 : 1;
-
-            //obj.GetComponent<Fogo>().SetInfo(new Vector2(direcao, 0), velocidadeBase, velocidadeSeno, forca);
-
-            if (enfurecido)
-            {
-                var mini2 = Instantiate(fogo, new Vector3(posAtual.x + somaOuSubtraiX, posAtual.y + somaOuSubtraiY), Quaternion.identity);
-                //mini2.GetComponent<Fogo>().SetInfo(new Vector2(direcao, 0), velocidadeBase, -velocidadeSeno, forca);
-            }
-
-            i++;
-            yield return new WaitForSeconds(0.2f);
-        }
-        jogandoFogo = false;
-    }
-
     private void SpawnaFogo()
     {
         Instantiate(fogo, transform.position, Quaternion.identity);
@@ -232,6 +207,7 @@ public class AlienElemental : MonoBehaviour
     private IEnumerator MudaEstagioVida()
     {
         yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.75f));
+        danificadoUmParticulas.Play();
         vidaEstagios = 2;
         anim.SetTrigger("Enfurece");
         acao = 0;
@@ -243,14 +219,20 @@ public class AlienElemental : MonoBehaviour
         acao = 1;
         yield return new WaitForSeconds(2f);
         StartCoroutine(AtiraBolhas());
+
+
         yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.5f));
+        danificadoDoisParticulas.Play();
         vidaEstagios = 3;
         anim.SetTrigger("Enfurece");
         acao = 0;
         yield return new WaitForSeconds(1);
         bichoPedra.gameObject.SetActive(true);
         acao = 1;
+
+
         yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.25f));
+        danificadoTresParticulas.Play();
         vidaEstagios = 4;
         anim.SetTrigger("Enfurece");
         acao = 0;
@@ -260,8 +242,10 @@ public class AlienElemental : MonoBehaviour
         SpawnaFogo();
         SpawnaFogo();
         acao = 1;
-        yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0));
-        vidaEstagios = 5;
+
+
+        yield return new WaitUntil(() => vida <= 0);
+        morreu = true;
     }
 
     protected void Flipar()

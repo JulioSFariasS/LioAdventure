@@ -262,7 +262,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5b27e335b94794b998b6b9779d0880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RGB: 0
   frequencia: 0.000001
   alternaGlow: 1
   alternaSoGlow: 0
   sprGlow: {fileID: 3359757732773015202}
+  gradiente:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.09803921, b: 0.9001829, a: 1}
+    key2: {r: 0.26065862, g: 0.21960783, b: 1, a: 0}
+    key3: {r: 0, g: 0.21154404, b: 1, a: 0}
+    key4: {r: 0.19607842, g: 0.9444098, b: 1, a: 0}
+    key5: {r: 0.38823533, g: 1, b: 0.49665204, a: 0}
+    key6: {r: 0, g: 1, b: 0.17894745, a: 0}
+    key7: {r: 1, g: 0.8834678, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 8096
+    ctime2: 16384
+    ctime3: 23516
+    ctime4: 33924
+    ctime5: 44718
+    ctime6: 54163
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 8
+    m_NumAlphaKeys: 2

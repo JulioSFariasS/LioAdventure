@@ -8,6 +8,7 @@ TagManager:
   - Inimigo
   - Escuro
   - ArmaInimigo
+  - Confusao
   layers:
   - Default
   - TransparentFX

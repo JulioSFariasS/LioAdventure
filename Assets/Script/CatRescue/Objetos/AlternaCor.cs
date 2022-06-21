@@ -5,7 +5,15 @@ using UnityEngine;
 public class AlternaCor : MonoBehaviour
 {
     private SpriteRenderer spr;
+    [Header("Variáveis para RGB")]
+    [SerializeField] private bool RGB;
     [SerializeField] private float frequencia;
+
+    [Header("Variáveis para cor fixa")]
+    [SerializeField] private Gradient gradiente;
+    private Color corAleatoria;
+
+    [Header("Variáveis de glow")]
     [SerializeField] private bool alternaGlow;
     [SerializeField] private bool alternaSoGlow;
     [SerializeField] private SpriteRenderer sprGlow;
@@ -13,7 +21,18 @@ public class AlternaCor : MonoBehaviour
     private void Start()
     {
         spr = GetComponent<SpriteRenderer>();
-        StartCoroutine(AlternadorDeCor());
+        if (RGB)
+        {
+            StartCoroutine(AlternadorDeCor());
+        }
+        else
+        {
+            corAleatoria = gradiente.Evaluate(Random.Range(0f, 1f));
+            spr.color = corAleatoria;
+
+            if (alternaGlow || alternaSoGlow)
+                sprGlow.material.SetColor("_ColorRGB", corAleatoria);
+        }
     }
 
     public IEnumerator AlternadorDeCor()

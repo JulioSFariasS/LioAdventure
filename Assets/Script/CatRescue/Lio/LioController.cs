@@ -11,14 +11,17 @@ public class LioController : MonoBehaviour
     [SerializeField] private float velocidade;
     [SerializeField] private float velocidadeBoost;
     [SerializeField] private float tempoDeBoost;
+    [SerializeField] private float tempoDeConfusao;
     private Vector2 movimento;
     private bool vulneravel=true;
     private bool super;
     private bool preso;
     private bool confuso;
+    private float confusoCont;
     private bool boost;
     private Vector2 boostDir;
     private float boostCont;
+    private bool venceu;
     //private bool morreu = false;
 
     [SerializeField] private int superQuantidade;
@@ -73,6 +76,11 @@ public class LioController : MonoBehaviour
 
     private void Update()
     {
+        if (venceu)
+        {
+            StopAllCoroutines();
+        }
+
         PegaInput();
 
         SuperForma();
@@ -90,6 +98,17 @@ public class LioController : MonoBehaviour
             {
                 boost = false;
                 boostCont = 0;
+            }
+        }
+
+        if (confuso)
+        {
+            confusoCont += Time.deltaTime;
+            if(confusoCont > tempoDeConfusao)
+            {
+                confuso = false;
+                confusoCont = 0;
+                GameController.getInstance().ConfusaTela(false);
             }
         }
 
@@ -125,6 +144,11 @@ public class LioController : MonoBehaviour
                     else
                     {
                         rb.velocity = -movimento.normalized * velocidade * Time.fixedDeltaTime;
+                        switch (boost)
+                        {
+                            case false: rb.velocity = -movimento.normalized * velocidade * Time.fixedDeltaTime; break;
+                            case true: rb.velocity = -boostDir.normalized * velocidadeBoost * Time.fixedDeltaTime; break;
+                        }
                     }
                     break;
                 case true: 
@@ -141,38 +165,53 @@ public class LioController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "EstrelaRosa")
+        if (!venceu)
         {
-            tiroQuantidade++;
-            TocarSom(collision.GetComponent<AudioSource>());
-            Destroy(collision.gameObject);
-        }
-        else
-        if (collision.name == "EstrelaPreta")
-        {
-            superQuantidade += 1;
-            TocarSom(collision.GetComponent<AudioSource>());
-            Destroy(collision.gameObject);
-        }
-        else
-        if (collision.tag == "Respawn")
-        {
-            GameController.getInstance().StartCoroutine(GameController.getInstance().MudaCena("AlienVerde"));
-        }
-        else
-        if (collision.name == "BolhaAlien" && !preso && super && vulneravel)
-        {
-            StartCoroutine(Prender());
-            if (collision.GetComponent<Bolha>().GetEnfurecido() && vulneravel)
+            if (collision.name == "EstrelaRosa")
             {
-                TomaDano();
+                tiroQuantidade++;
+                TocarSom(collision.GetComponent<AudioSource>());
+                Destroy(collision.gameObject);
+            }
+            else
+            if (collision.name == "EstrelaPreta")
+            {
+                superQuantidade += 1;
+                TocarSom(collision.GetComponent<AudioSource>());
+                Destroy(collision.gameObject);
+            }
+            else
+            if (collision.tag == "Respawn")
+            {
+                GameController.getInstance().StartCoroutine(GameController.getInstance().GameOver(transform, "AlienVerde"));
+            }
+            else
+            if (collision.name == "BolhaAlien" && !preso && super && vulneravel)
+            {
+                StartCoroutine(Prender());
+                GameController.getInstance().EmbolharTela(true);
+                if (collision.GetComponent<Bolha>().GetEnfurecido() && vulneravel)
+                {
+                    TomaDano();
+                }
+            }
+            else
+            if (collision.CompareTag("Confusao") && !confuso && super && vulneravel)
+            {
+                confuso = true;
+                GameController.getInstance().ConfusaTela(true);
+
+                if (collision.name.Substring(0, 12) == "BichoFuracao")
+                {
+                    collision.GetComponent<Animator>().Play("FuracaoDestroi");
+                }
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if((collision.CompareTag("Inimigo") || collision.CompareTag("ArmaInimigo")) && vulneravel && super)
+        if((collision.CompareTag("Inimigo") || collision.CompareTag("ArmaInimigo")) && vulneravel && super && !venceu)
         {
             TomaDano();
         }
@@ -182,6 +221,7 @@ public class LioController : MonoBehaviour
     {
         vulneravel = false;
         StartCoroutine(PiscaBranco());
+        GameController.getInstance().DanoTela();
         superQuantidade -= 5;
         danoParticulas.Play();
 
@@ -226,7 +266,7 @@ public class LioController : MonoBehaviour
             rb.gravityScale = 0f;
         }
 
-        if (!superContando && superQuantidade > 0)
+        if (!superContando && superQuantidade > 0 && !venceu)
         {
             superContando = true;
             StartCoroutine(SuperContador());
@@ -539,6 +579,7 @@ public class LioController : MonoBehaviour
     private void AjustarRotacao()
     {
         preso = false;
+        GameController.getInstance().EmbolharTela(false);
         rb.freezeRotation = true;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
     }
@@ -556,6 +597,16 @@ public class LioController : MonoBehaviour
     public bool GetPreso()
     {
         return preso;
+    }
+
+    public bool GetVenceu()
+    {
+        return venceu;
+    }
+
+    public void Venceu()
+    {
+        venceu = true;
     }
 
     private void TocarSom(AudioSource source)

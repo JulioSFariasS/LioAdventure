@@ -58,7 +58,8 @@ public class Bolha : MonoBehaviour
     {
         if (collision.tag=="Player")
         {
-            if (!collision.GetComponent<LioController>().GetPreso() && collision.GetComponent<LioController>().GetVulneravel() && collision.GetComponent<LioController>().GetSuper())
+            if (!collision.GetComponent<LioController>().GetPreso() && collision.GetComponent<LioController>().GetVulneravel() && collision.GetComponent<LioController>().GetSuper()
+                && !collision.GetComponent<LioController>().GetVenceu())
             {
                 GetComponent<Collider2D>().enabled = false;
                 player = collision.transform;
