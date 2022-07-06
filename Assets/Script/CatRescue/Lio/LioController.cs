@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LioController : MonoBehaviour
 {
@@ -52,8 +53,10 @@ public class LioController : MonoBehaviour
     [SerializeField] private ParticleSystem estrelasPretasParticulas;
     [SerializeField] private ParticleSystem danoParticulas;
     [SerializeField] private ParticleSystem boostParticulas;
+    [SerializeField] private ParticleSystem fumacaParticulas;
 
     PlayerControl controle;
+    [SerializeField] Joystick joystickTouch;
 
     [Header("Sons")]
     [SerializeField] private AudioClip danoSom;
@@ -72,57 +75,66 @@ public class LioController : MonoBehaviour
         StartCoroutine(ControlaParticulasEstrelaPreta());
         StartCoroutine(ControlaParticulasTiroDisponivel());
         StartCoroutine(ControlaParticulasBoost());
+        StartCoroutine(ControlaParticulasFumaca());
     }
 
     private void Update()
     {
-        if (venceu)
+        if (GameController.getInstance().comecar)
         {
-            StopAllCoroutines();
-        }
+            if (venceu)
+            {
+                StopAllCoroutines();
+            }
 
-        PegaInput();
+            if (GameController.getInstance().mobile)
+            {
+                PegaInputTouch();
+            }
+            else
+            {
+                PegaInput();
+            }
+
+            if (!boost)
+            {
+                boostDir = movimento;
+            }
+            else
+            {
+                boostCont += Time.deltaTime;
+                if (boostCont > tempoDeBoost)
+                {
+                    boost = false;
+                    boostCont = 0;
+                }
+            }
+
+            if (confuso)
+            {
+                confusoCont += Time.deltaTime;
+                if (confusoCont > tempoDeConfusao)
+                {
+                    confuso = false;
+                    confusoCont = 0;
+                    GameController.getInstance().ConfusaTela(false);
+                }
+            }
+
+            if (!preso)
+            {
+                Flip();
+            }
+
+            if (preso && !super)
+            {
+                preso = false;
+                AjustarRotacao();
+            }
+
+        }
 
         SuperForma();
-
-        GameController.getInstance().AtivaOuDesativaGameOver(!super);
-
-        if (!boost)
-        {
-            boostDir = movimento;
-        }
-        else
-        {
-            boostCont += Time.deltaTime;
-            if (boostCont > tempoDeBoost)
-            {
-                boost = false;
-                boostCont = 0;
-            }
-        }
-
-        if (confuso)
-        {
-            confusoCont += Time.deltaTime;
-            if(confusoCont > tempoDeConfusao)
-            {
-                confuso = false;
-                confusoCont = 0;
-                GameController.getInstance().ConfusaTela(false);
-            }
-        }
-
-        if (!preso)
-        {
-            Flip();
-        }
-
-        if(preso && !super)
-        {
-            preso = false;
-            AjustarRotacao();
-        }
-        
         AtualizaHud();
     }
 
@@ -159,7 +171,7 @@ public class LioController : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(movimento.x * velocidade * Time.fixedDeltaTime, -velocidadeDeQueda);
+            rb.velocity = new Vector2(movimento.normalized.x * velocidade * Time.fixedDeltaTime, -velocidadeDeQueda);
         }
     }
 
@@ -181,19 +193,22 @@ public class LioController : MonoBehaviour
                 Destroy(collision.gameObject);
             }
             else
+            if (collision.name == "EstrelaAzul")
+            {
+                superQuantidade += 2;
+                TocarSom(collision.GetComponent<AudioSource>());
+                Destroy(collision.gameObject);
+            }
+            else
             if (collision.tag == "Respawn")
             {
-                GameController.getInstance().StartCoroutine(GameController.getInstance().GameOver(transform, "AlienVerde"));
+                GameController.getInstance().StartCoroutine(GameController.getInstance().GameOver(transform, SceneManager.GetActiveScene().name));
             }
             else
             if (collision.name == "BolhaAlien" && !preso && super && vulneravel)
             {
                 StartCoroutine(Prender());
                 GameController.getInstance().EmbolharTela(true);
-                if (collision.GetComponent<Bolha>().GetEnfurecido() && vulneravel)
-                {
-                    TomaDano();
-                }
             }
             else
             if (collision.CompareTag("Confusao") && !confuso && super && vulneravel)
@@ -248,6 +263,7 @@ public class LioController : MonoBehaviour
             superQuantidade = 10;
         }
 
+        
         if (superQuantidade > 0 && !super)
         {
             super = true;
@@ -266,7 +282,7 @@ public class LioController : MonoBehaviour
             rb.gravityScale = 0f;
         }
 
-        if (!superContando && superQuantidade > 0 && !venceu)
+        if (!superContando && superQuantidade > 0 && !venceu && GameController.getInstance().comecar)
         {
             superContando = true;
             StartCoroutine(SuperContador());
@@ -276,7 +292,7 @@ public class LioController : MonoBehaviour
     private void Atirar()
     {
         tiroQuantidade--;
-        AudioManager.instance.CriaTocaEDestroi(tiroSom[Random.Range(0, 2)], 0.1f, 1, false);
+        //AudioManager.instance.CriaTocaEDestroi(tiroSom[Random.Range(0, 2)], 0.1f, 1, false);
         tiroDisparadoParticulas.Play();
         var tiro = Instantiate(tiroObj, new Vector3(transform.position.x, transform.position.y + Random.Range(-0.05f,0.09f)), Quaternion.identity);
         tiro.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
@@ -287,11 +303,12 @@ public class LioController : MonoBehaviour
 
     private void Flip()
     {
-        switch (movimento.x)
-        {
-            case 1: transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z); break;
-            case -1: transform.eulerAngles = new Vector3(0, 180, transform.eulerAngles.z); break;
-        }
+        if(movimento.x>0f)
+            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
+        else
+        if (movimento.x < 0f)
+            transform.eulerAngles = new Vector3(0, 180, transform.eulerAngles.z);
+
     }
 
     private void PegaInput()
@@ -324,7 +341,7 @@ public class LioController : MonoBehaviour
             movimento.y = 0;
         }
 
-        if(Controle.attack && super && !preso)
+        if(Controle.attack && super && !preso &&!boost)
         {
             tiroContador += Time.deltaTime;
             if (tiroContador >= tiroDelay)
@@ -340,6 +357,39 @@ public class LioController : MonoBehaviour
         }
 
         if(Controle.jumpDown && !boost && movimento!=Vector2.zero && super)
+        {
+            boost = true;
+            boostCont = 0;
+        }
+    }
+
+    private void PegaInputTouch()
+    {
+        movimento.x = joystickTouch.Horizontal;
+        movimento.y = joystickTouch.Vertical;
+    }
+
+    public void AtiraTouch()
+    {
+        if (super && !preso)
+        {
+            tiroContador += Time.deltaTime;
+            if (tiroContador >= tiroDelay)
+            {
+                Atirar();
+                tiroContador = 0;
+            }
+        }
+    }
+
+    public void ParaAtiraTouch()
+    {
+            tiroContador = tiroDelay;
+    }
+
+    public void BoostTouch()
+    {
+        if (!boost && movimento != Vector2.zero && super)
         {
             boost = true;
             boostCont = 0;
@@ -499,10 +549,6 @@ public class LioController : MonoBehaviour
         //SpriteBranca();
         //ResetDeCores();
         AudioManager.instance.CriaTocaEDestroi(danoSom, 1, 1, false);
-        Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(0.1f);
-
-        Time.timeScale = 1;
 
         for (int i = 0; i < 5; i++)
         {
@@ -550,6 +596,17 @@ public class LioController : MonoBehaviour
         StartCoroutine(ControlaParticulasBoost());
     }
 
+    private IEnumerator ControlaParticulasFumaca()
+    {
+        yield return new WaitUntil(() => !super);
+        fumacaParticulas.Play();
+        GameController.getInstance().AtivaOuDesativaGameOver(true);
+        yield return new WaitUntil(() => super);
+        GameController.getInstance().AtivaOuDesativaGameOver(false);
+        fumacaParticulas.Play();
+        StartCoroutine(ControlaParticulasFumaca());
+    }
+
     private IEnumerator SuperContador()
     {
         yield return new WaitForSeconds(1);
@@ -567,13 +624,6 @@ public class LioController : MonoBehaviour
         preso = true;
         yield return new WaitForSeconds(2);
         AjustarRotacao();
-    }
-
-    private IEnumerator Confusao()
-    {
-        confuso = true;
-        yield return new WaitForSeconds(5);
-        confuso = false;
     }
 
     private void AjustarRotacao()
@@ -611,6 +661,6 @@ public class LioController : MonoBehaviour
 
     private void TocarSom(AudioSource source)
     {
-        AudioManager.instance.TocaEDestroi(source);
+        //AudioManager.instance.TocaEDestroi(source);
     }
 }

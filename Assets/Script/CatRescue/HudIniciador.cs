@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class HudIniciador : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class HudIniciador : MonoBehaviour
     [SerializeField] private GameObject vitoriaPanel;
     [SerializeField] private ParticleSystem vitoriaParticulaEsq;
     [SerializeField] private ParticleSystem vitoriaParticulaDir;
+    [SerializeField] private CinemachineVirtualCamera cameraNormal;
+    [SerializeField] private GameObject canvasJoy;
 
     private void Start()
     {
@@ -22,5 +25,7 @@ public class HudIniciador : MonoBehaviour
         GameController.getInstance().vitoriaPanel = vitoriaPanel;
         GameController.getInstance().vitoriaParticulaEsq = vitoriaParticulaEsq;
         GameController.getInstance().vitoriaParticulaDir = vitoriaParticulaDir;
+        GameController.getInstance().cameraNormal = cameraNormal;
+        GameController.getInstance().canvasJoy = canvasJoy;
     }
 }

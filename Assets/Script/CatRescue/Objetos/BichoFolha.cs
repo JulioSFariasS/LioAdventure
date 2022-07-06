@@ -41,6 +41,7 @@ public class BichoFolha : MonoBehaviour
     {
         objMovel.enabled = true;
         objMovel.SetInfo(velocidadeAtaque, 0);
+        Destroy(objPontoPraIr.gameObject);
         Destroy(bichoFolha);
     }
 }

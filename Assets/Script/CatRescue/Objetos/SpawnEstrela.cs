@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SpawnEstrela : MonoBehaviour
 {
-    private int cor; //0-Rosa 1-Preta
-    [SerializeField] private GameObject estrelaRosa;
     [SerializeField] private GameObject estrelaPreta;
 
     private void Start()
@@ -15,28 +13,37 @@ public class SpawnEstrela : MonoBehaviour
 
     private IEnumerator Spawna()
     {
-        int quantidade = 3;//Random.Range(1, 4);
+        yield return new WaitUntil(() => GameController.getInstance().comecar);
+        int quantidade = 0;
+        switch (GameController.getInstance().GetNomeDaCena())
+        {
+            case "AlienVerde": quantidade = 3; break;
+            case "AlienEletrico":
+                if (estrelaPreta.name == "BolaEletrica")
+                    quantidade = 1;
+                else
+                    quantidade = 2;
+                break;
+        }
+        
         Vector3 posAtual = transform.position;
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        yield return new WaitForSeconds(Random.Range(1f, 2f));
 
         for (int i = 0; i < quantidade; i++)
         {
-            cor = 1;//GameController.getInstance().lioController.GetSuper() ? 0 : 1;
-
             switch (GameController.getInstance().GetNomeDaCena())
             {
                 case "AlienVerde":
-                    switch (cor)
-                    {
-                        case 0:
-                            var objRosa = Instantiate(estrelaRosa, posAtual, Quaternion.identity);
-                            objRosa.GetComponent<Flutuantes>().posBase.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 360);
-                            break;
-                        case 1:
-                            var objPreto = Instantiate(estrelaPreta, posAtual, Quaternion.identity);
-                            objPreto.GetComponent<Flutuantes>().posBase.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 360);
-                            break;
-                    }
+
+                    var objPreto = Instantiate(estrelaPreta, posAtual, Quaternion.identity);
+                    objPreto.GetComponent<Flutuantes>().posBase.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 360);
+                    break;
+
+                case "AlienEletrico":
+                    InicioPontoDeMovimentoAleatorio pontos = GetComponent<InicioPontoDeMovimentoAleatorio>();
+                    objPreto = Instantiate(estrelaPreta, posAtual, Quaternion.identity);
+                    objPreto.GetComponent<MovimentoEntrePontos>().pontoFuturo = pontos.pontosDeMovimento[Random.Range(0, pontos.pontosDeMovimento.Length)].transform;
+                    objPreto.GetComponent<MovimentoEntrePontos>().movendo = true;
                     break;
             }
 

@@ -200,7 +200,7 @@ public class AlienVerde : MonoBehaviour
         for(int i = 0; i<10; i++)
         {
             var bolhaObj = Instantiate(bolha, bolhaSpawn.position, Quaternion.identity);
-            bolhaObj.GetComponent<Bolha>().SetInfo(enfurecido);
+            //bolhaObj.GetComponent<Bolha>().SetInfo(enfurecido);
             AudioManager.instance.CriaTocaEDestroi(soltaBolhaSom, 0.2f, 1, false);
             yield return new WaitForSeconds(0.2f);
         }

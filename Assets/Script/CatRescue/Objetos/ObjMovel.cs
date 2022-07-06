@@ -11,11 +11,29 @@ public class ObjMovel : MonoBehaviour
     private Vector2 movimento;
     private float velocidade;
     private bool iniciado;
+    private bool autoDestruir, estavaVisivel;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(DestroiForaDaCamera());
+        rb = GetComponent<Rigidbody2D>();   
+    }
+
+    private void Update()
+    {
+        if(spr!=null)
+        {
+            if (estavaVisivel && !spr.isVisible && !autoDestruir)
+            {
+                autoDestruir = true;
+                StartCoroutine(DestroiForaDaCamera());
+            }
+
+            estavaVisivel = spr.isVisible;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }       
     }
 
     public void SetInfo(float velocidade, Vector2 direcao, float rotacao)
@@ -52,8 +70,6 @@ public class ObjMovel : MonoBehaviour
 
     private IEnumerator DestroiForaDaCamera()
     {
-        yield return new WaitUntil(() => spr.isVisible);
-        yield return new WaitUntil(() => spr==null || (spr!=null && !spr.isVisible));
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }

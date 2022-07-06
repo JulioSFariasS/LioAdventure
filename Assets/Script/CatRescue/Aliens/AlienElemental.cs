@@ -13,9 +13,6 @@ public class AlienElemental : MonoBehaviour
     [SerializeField] private int vida;
     private bool morreu;
     private int vidaTotal;
-    private int vidaEstagios=1;
-    private bool enfureceu;
-    private bool enfurecido;
 
     [Header("Movimento")]
     [SerializeField] private float velNormal;
@@ -26,34 +23,37 @@ public class AlienElemental : MonoBehaviour
      * 1 - movimento sem ataque
      */
     [SerializeField] private int acao;
-    private int ataqueAnterior;
 
     private PiscarBranco piscarBranco;
+
+    [Header("Atributos de ataques")]
+    [SerializeField] private float velocidadeDasNuvens;
+    [SerializeField] private float intervaloDeSpawnNuvens;
+    [SerializeField] private int quantidadeDeNuvens;
+    [SerializeField] private Transform baseDeDirecoesDeFogo;
+    [SerializeField] private float velocidadeDoFogo;
+    [SerializeField] private int quantidadeDeRajadasDeFogo;
+    [SerializeField] private Vector3 posicaoAtaqueFinal;
+
+    [Header("Objetos para controlar")]
+    [SerializeField] private GameObject nuvenzona;
 
     [Header("Objetos para instanciar")]
     [SerializeField] private GameObject bolha;
     [SerializeField] private GameObject fogo;
-    [SerializeField] private GameObject meteoro;
     [SerializeField] private GameObject folha;
+    [SerializeField] private GameObject nuvenzinha;
+    [SerializeField] private GameObject gota;
 
     [Header("Objetos base para instancias")]
-    [SerializeField] private Transform bolhaSpawn;
-    [SerializeField] private Transform bolhaSpawnBase;
-    [SerializeField] private Transform bichoPedra;
-    [SerializeField] private Transform maoDir;
     [SerializeField] private Transform maoEsq;
+    [SerializeField] private Transform cabecaPos;
+    [SerializeField] private Transform[] direcoesFogo; 
 
     [Header("Sons")]
-    [SerializeField] private AudioClip laserSom;
-    [SerializeField] private AudioClip alertaSom;
+    [SerializeField] private AudioClip atiraFogoSom;
     [SerializeField] private AudioClip invocaMiniSom;
     [SerializeField] private AudioClip soltaBolhaSom;
-
-    [Header("Particulas")]
-    [SerializeField] private ParticleSystem danificadoUmParticulas;
-    [SerializeField] private ParticleSystem danificadoDoisParticulas;
-    [SerializeField] private ParticleSystem danificadoTresParticulas;
-
 
     private void Start()
     {
@@ -61,36 +61,41 @@ public class AlienElemental : MonoBehaviour
         StartComponentes();
         piscarBranco = GetComponent<PiscarBranco>();
         StartCoroutine(MudaEstagioVida());
-        StartCoroutine(Enfurecer());
-        StartCoroutine(EscolhendoAcao());
     }
 
     private void Update()
     {
-        if (morreu)
+        if (GameController.getInstance().comecar)
         {
-            morreu = false;
-            StopAllCoroutines();
-            acao = 0;
-            GameController.getInstance().StartCoroutine(GameController.getInstance().DerrotaChefe("Elemental", gameObject.transform, "AlienVerde"));
-            anim.SetTrigger("Morre");
+            if (morreu)
+            {
+                morreu = false;
+                StopAllCoroutines();
+                acao = 0;
+                GameController.getInstance().StartCoroutine(GameController.getInstance().DerrotaChefe("Elemental", cabecaPos, "AlienEletrico"));
+                anim.SetTrigger("Morre");
+            }
+
+            switch (acao)
+            {
+                case 0:
+                    flutuantes.velocidade = 0;
+                    flutuantes.stopContaTempo = true;
+                    break;
+
+                case 1:
+                    flutuantes.enabled = true;
+                    flutuantes.velocidade = velNormal;
+                    flutuantes.stopContaTempo = false;
+                    break;
+
+                case 2:
+                    flutuantes.enabled = false;
+                    break;
+            }
+            Flipar();
         }
-
-        switch (acao)
-        {
-            case 0: flutuantes.velocidade = 0;
-                flutuantes.stopContaTempo = true;
-                break;
-
-            case 1:
-                flutuantes.velocidade = velNormal;
-                flutuantes.stopContaTempo = false;
-                break;
-
-            case 2:
-                break;
-        }
-        Flipar();
+        
         AtualizaHud();
     }
 
@@ -108,156 +113,167 @@ public class AlienElemental : MonoBehaviour
         else
         if (acao == 2)
         {
-            //RotacionaBracoLaser();
+            if(Vector3.Distance(rb.position, posicaoAtaqueFinal) > 0.01f)
+            {
+                rb.MovePosition(Vector3.MoveTowards(rb.position, posicaoAtaqueFinal, velNormal * Time.deltaTime));
+            }
             //rb.MovePosition(Vector3.SmoothDamp(rb.position, direcao.transform.position, ref m_Velocity, movementSmoothing, velocidade));
         }
     }
 
-    private IEnumerator EscolhendoAcao()
+    private IEnumerator EscolhendoAcaoFolhas()
     {
-        //anim.Play("Parado");
+        yield return new WaitForSeconds(3f);
+        anim.SetInteger("Ataque", 0);
+        anim.SetTrigger("Troca");
+        yield return new WaitForSeconds(1.5f);
         acao = 1;
-
-        if (!enfurecido)
-            yield return new WaitForSeconds(Random.Range(1, 7));
-        else
-            yield return new WaitForSeconds(Random.Range(1, 3));
-
-        int ataque = 5;
-
-        Escolha:
         do
         {
-            ataque = Random.Range(2, 4);
-        }
-        while (ataque == ataqueAnterior);
-        
-        ataqueAnterior = ataque;
 
-        switch (ataque)
+            anim.SetTrigger("Atacou");
+            yield return new WaitForSeconds(1.7f);
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
+
+        } while (vida >= (int)(vidaTotal * 0.66f));
+        acao = 0;
+        anim.SetTrigger("Parado");
+        yield return new WaitForSeconds(0.7f);
+    }
+
+    private IEnumerator EscolhendoAcaoAguaVento()
+    {
+        acao = 0;
+        yield return new WaitForSeconds(1f);
+        anim.SetInteger("Ataque", 1);
+        anim.SetTrigger("Troca");
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(DesceNuvenzona());
+        StartCoroutine(Nuvenzinhas());
+        acao = 1;
+        do
         {
-            case 2:
-                yield return StartCoroutine(AtiraFolhas());
-                break;
-            case 3:
-                if(vidaEstagios>2)
-                    yield return StartCoroutine(AtiraMeteoro());
-                else
-                    goto Escolha;
-                break;
-        }
-
-        StartCoroutine(EscolhendoAcao());
+            anim.SetTrigger("Atacou");
+            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(Random.Range(3f, 5f));
+        } while (vida >= (int)(vidaTotal * 0.33f));
+        acao = 0;
+        anim.SetTrigger("Parado");
+        yield return new WaitForSeconds(0.7f);
     }
 
-    private IEnumerator AtiraFolhas()
+    private IEnumerator DesceNuvenzona()
     {
-        anim.SetTrigger("Procura");
-        yield return new WaitForSeconds(2.5f);
-    }
-
-    public void AtiraFolhasPeloAnim(int i)
-    {
-        switch (i)
+        yield return new WaitForSeconds(2);
+        nuvenzona.SetActive(true);
+        do
         {
-            case 1:
-                Instantiate(folha, maoDir.position, Quaternion.identity);
-                break;
-            case 2:
-                Instantiate(folha, maoEsq.position, Quaternion.identity);
-                break;
-        }
+            float xAleatorio = Random.Range(nuvenzona.GetComponent<SpriteRenderer>().bounds.min.x, nuvenzona.GetComponent<SpriteRenderer>().bounds.max.x);
+            Vector2 pos = new Vector2(xAleatorio, nuvenzona.GetComponent<SpriteRenderer>().bounds.max.y);
+            var obj = Instantiate(gota, pos, Quaternion.identity);
+            obj.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            obj.GetComponent<ObjMovel>().SetInfo(1, new Vector2(0, -1), 0);
+            yield return new WaitForSeconds(Random.Range(0.2f, 0.5f));
+
+        } while (vida >= (int)(vidaTotal * 0.33f));
+        nuvenzona.GetComponent<Animator>().SetTrigger("Sobe");
     }
 
-    private IEnumerator AtiraMeteoro()
+    private IEnumerator Nuvenzinhas()
     {
-        //bichoPedra.GetComponent<Animator>().SetTrigger("AbreBoca");
-        yield return new WaitForSeconds(0.5f);
-        var obj = Instantiate(meteoro, new Vector3(bichoPedra.position.x,bichoPedra.position.y- 0.163f), Quaternion.identity);
-        obj.GetComponent<ObjMovel>().SetInfo(0.9f, new Vector2(-1, 0), 0);
-    }
-
-    private IEnumerator AtiraBolhas()
-    {
-        bolhaSpawn.GetChild(0).GetChild(0).GetComponent<Animator>().SetBool("Soprando", true);
-        yield return new WaitForSeconds(0.6f);
-        for (int i = 0; i < 5; i++)
+        yield return new WaitForSeconds(Random.Range(2f, 4f));
+        nuvenzona.SetActive(true);
+        do
         {
-            var bolhaObj = Instantiate(bolha, bolhaSpawn.position, Quaternion.identity);
-            bolhaObj.GetComponent<Bolha>().SetInfo(false);
-            AudioManager.instance.CriaTocaEDestroi(soltaBolhaSom, 0.2f, 1, false);
-            yield return new WaitForSeconds(0.2f);
+            var obj = Instantiate(nuvenzinha, cabecaPos.position, Quaternion.identity);
+            obj.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            obj.GetComponent<ObjMovel>().SetInfo(1, new Vector2(-1, 0), 0);
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
+
+        } while (vida >= (int)(vidaTotal * 0.33f));
+    }
+
+    public void AtiraFolhasPeloAnim()
+    {
+        Instantiate(folha, maoEsq.position, Quaternion.identity);
+    }
+
+    public void CriaNuvensPeloAnim()
+    {
+        var obj = Instantiate(nuvenzinha, maoEsq.position, Quaternion.identity);
+        obj.GetComponent<ObjMovel>().SetInfo(0.5f, new Vector2(0, 1), 0);
+    }
+
+    public void CriaBolhaPeloAnim()
+    {
+        Instantiate(bolha, maoEsq.position, Quaternion.identity);
+        AudioManager.instance.CriaTocaEDestroi(soltaBolhaSom, 0.2f, 1, false);
+    }
+
+    private IEnumerator EscolhendoAcaoFogo()
+    {
+        StartCoroutine(ChecaVidaEstagioNoFinal());
+        acao = 0;
+        yield return new WaitForSeconds(1f);
+        anim.SetInteger("Ataque", 2);
+        anim.SetTrigger("Troca");
+        yield return new WaitForSeconds(1.5f);
+        acao = 1;
+        do
+        {
+            anim.SetTrigger("Atacou");
+            yield return new WaitForSeconds(1.5f);
+            yield return StartCoroutine(SpawnaFogo());
+            anim.SetTrigger("Parado");
+            yield return new WaitForSeconds(1f);
+
+        } while (vida >= 0);
+        acao = 0;
+        anim.SetTrigger("Parado");
+        yield return new WaitForSeconds(0.7f);
+    }
+
+    private IEnumerator SpawnaFogo()
+    {
+        for (int i = 0; i < quantidadeDeRajadasDeFogo; i++)
+        {
+            foreach (Transform dir in direcoesFogo)
+            {
+                var obj = Instantiate(fogo, baseDeDirecoesDeFogo.position, Quaternion.identity);
+                obj.GetComponent<ObjMovel>().SetInfo(velocidadeDoFogo, (dir.position - obj.transform.position).normalized , 0);
+            }
+            yield return new WaitForSeconds(0.3f);
         }
-        bolhaSpawn.GetChild(0).GetChild(0).GetComponent<Animator>().SetBool("Soprando", false);
-        yield return new WaitForSeconds(Random.Range(1f, 6f));
-        StartCoroutine(AtiraBolhas());
-    }
-
-    private void SpawnaFogo()
-    {
-        Instantiate(fogo, transform.position, Quaternion.identity);
-    }
-
-    private IEnumerator Enfurecer()
-    {
-        yield return new WaitUntil(() => vidaEstagios==3);
-        enfurecido = true;
     }
 
     private IEnumerator MudaEstagioVida()
     {
-        yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.75f));
-        danificadoUmParticulas.Play();
-        vidaEstagios = 2;
-        anim.SetTrigger("Enfurece");
-        acao = 0;
-        yield return new WaitForSeconds(1.3f);
-        anim.SetTrigger("SoltaBichoBolha");
-        yield return new WaitForSeconds(1.5f);
-        bolhaSpawn = Instantiate(bolhaSpawn, bolhaSpawnBase.position, Quaternion.identity);
-        bolhaSpawn.GetComponent<BolhaSpawnerScript>().liberar = true;
-        acao = 1;
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(AtiraBolhas());
+        yield return new WaitUntil(() => GameController.getInstance().comecar);
+        yield return StartCoroutine(EscolhendoAcaoFolhas());
+        yield return StartCoroutine(EscolhendoAcaoAguaVento());
+        yield return StartCoroutine(EscolhendoAcaoFogo());
+    }
 
-
-        yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.5f));
-        danificadoDoisParticulas.Play();
-        vidaEstagios = 3;
-        anim.SetTrigger("Enfurece");
-        acao = 0;
-        yield return new WaitForSeconds(1);
-        bichoPedra.gameObject.SetActive(true);
-        acao = 1;
-
-
-        yield return new WaitUntil(() => vida <= (int)(vidaTotal * 0.25f));
-        danificadoTresParticulas.Play();
-        vidaEstagios = 4;
-        anim.SetTrigger("Enfurece");
-        acao = 0;
-        yield return new WaitForSeconds(1);
-        SpawnaFogo();
-        SpawnaFogo();
-        SpawnaFogo();
-        SpawnaFogo();
-        acao = 1;
-
-
+    private IEnumerator ChecaVidaEstagioNoFinal()
+    {
         yield return new WaitUntil(() => vida <= 0);
+        anim.SetTrigger("Morre");
         morreu = true;
     }
 
     protected void Flipar()
     {
-        if (GameController.getInstance().lioController.transform.position.x < transform.position.x)
+        if (acao != 2)
         {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        if (GameController.getInstance().lioController.transform.position.x > transform.position.x)
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            if (GameController.getInstance().lioController.transform.position.x < transform.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+            else
+                    if (GameController.getInstance().lioController.transform.position.x > transform.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
         }
     }
 
@@ -266,11 +282,6 @@ public class AlienElemental : MonoBehaviour
         if (collision.tag == "ArmaLio")
         {
             vida--;
-            //var estrela = Instantiate(estrelaPreta, new Vector3(transform.position.x, transform.position.y-0.08f), Quaternion.identity);
-            //estrela.transform.localScale = new Vector3(0.5f, 0.5f);
-
-            //estrela.GetComponent<Estrela>().movimento.x = -1;
-            //estrela.GetComponent<Estrela>().ESeguidora();
             piscarBranco.StartCoroutine(piscarBranco.PiscaBranco());
         }
     }
@@ -291,14 +302,8 @@ public class AlienElemental : MonoBehaviour
     {
         switch (nome)
         {
-            case "alerta": AudioManager.instance.CriaTocaEDestroi(alertaSom, 0.6f, 1, false); break;
-            case "laser": AudioManager.instance.CriaTocaEDestroi(laserSom, 0.8f, 1, false); break;
+            case "fogo": AudioManager.instance.CriaTocaEDestroi(atiraFogoSom, 0.8f, 1, false); break;
             case "invocaMini": AudioManager.instance.CriaTocaEDestroi(invocaMiniSom, 0.8f, 1, false); break;
         }
-    }
-
-    public bool GetEnfurecido()
-    {
-        return enfurecido;
     }
 }

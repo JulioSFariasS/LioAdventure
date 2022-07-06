@@ -25,6 +25,10 @@ public class Flutuantes : MonoBehaviour
 
     protected void Update()
     {
+        if (posBase == null)
+        {
+            Destroy(gameObject);
+        }
         if (!stopContaTempo)
         {
             contaTempo += Time.deltaTime;

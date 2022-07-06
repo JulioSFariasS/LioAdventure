@@ -7,14 +7,11 @@ public class Bolha : MonoBehaviour
     private Vector2 movimento;
     [Header("Sprites")]
     [SerializeField] private Sprite normal;
-    [SerializeField] private Sprite normalPodre;
     [SerializeField] private Sprite estoura;
-    [SerializeField] private Sprite estouraPodre;
     private float velocidade;
     [SerializeField] private Rigidbody2D rb;
     private bool agarrou;
     private Transform player;
-    private bool chefeEnfurecido;
 
     void Start()
     {
@@ -22,14 +19,12 @@ public class Bolha : MonoBehaviour
         movimento = new Vector2(-1f, Random.Range(-1f, 1f));
         rb = GetComponent<Rigidbody2D>();
         velocidade = Random.Range(0.4f, 0.8f);
-        StartCoroutine(Destruir());
     }
 
-    public void SetInfo(bool enfurecido)
+    private void Update()
     {
-        chefeEnfurecido = enfurecido;
-
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = chefeEnfurecido ? normalPodre : normal;
+        if(!transform.GetChild(0).GetComponent<SpriteRenderer>().isVisible)
+            Destroy(gameObject);
     }
 
     void LateUpdate()
@@ -96,20 +91,8 @@ public class Bolha : MonoBehaviour
     private IEnumerator Estoura()
     {
         AudioManager.instance.Play("BolhaEstoura");
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = chefeEnfurecido? estouraPodre : estoura;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = estoura;
         yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
-    }
-
-    private IEnumerator Destruir()
-    {
-        yield return new WaitUntil(() => transform.GetChild(0).GetComponent<SpriteRenderer>().isVisible);
-        yield return new WaitUntil(() => !transform.GetChild(0).GetComponent<SpriteRenderer>().isVisible);
-        Destroy(gameObject);
-    }
-
-    public bool GetEnfurecido()
-    {
-        return chefeEnfurecido;
     }
 }

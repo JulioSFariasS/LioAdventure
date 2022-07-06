@@ -14,7 +14,7 @@ public class BolhaSpawnerScript : MonoBehaviour
         StartCoroutine(Liberar());
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (liberar)
         {

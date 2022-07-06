@@ -4,9 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
+
 
 public class GameController : Singleton<GameController>
 {
+    public bool mobile;
+    public GameObject canvasJoy;
+    public CinemachineVirtualCamera cameraNormal;
     public LioController lioController;
     public TextMeshProUGUI superContadorTxt;
     public TextMeshProUGUI tiroContadorTxt;
@@ -18,6 +23,7 @@ public class GameController : Singleton<GameController>
     public FundoPreto fundoPreto;
     public GameObject vitoriaPanel;
     public ParticleSystem vitoriaParticulaEsq, vitoriaParticulaDir;
+    public bool comecar;
 
     void Start()
     {
@@ -42,10 +48,26 @@ public class GameController : Singleton<GameController>
 
     public void AjeitaCena()
     {
+        comecar = false;
         switch (SceneManager.GetActiveScene().name)
         {
             case "AlienVerde":
+
+                if (mobile)
+                    canvasJoy.SetActive(true);
+
+                StartCoroutine(ComecarAcoes());
                 Debug.Log("alien verde");
+                fundoPreto.StartCoroutine(fundoPreto.IniciaCena(lioController.transform));
+                gameOver = Camera.main.transform.GetChild(0).gameObject;
+                break;
+            case "AlienEletrico":
+
+                if (mobile)
+                    canvasJoy.SetActive(true);
+
+                StartCoroutine(ComecarAcoes());
+                Debug.Log("alien eletrico");
                 fundoPreto.StartCoroutine(fundoPreto.IniciaCena(lioController.transform));
                 gameOver = Camera.main.transform.GetChild(0).gameObject;
                 break;
@@ -54,7 +76,14 @@ public class GameController : Singleton<GameController>
 
     public IEnumerator GameOver(Transform alvo, string nomeCena)
     {
+        comecar = false;
         yield return fundoPreto.StartCoroutine(fundoPreto.AcabaCena(alvo, nomeCena));
+    }
+
+    public IEnumerator ComecarAcoes()
+    {
+        yield return new WaitForSeconds(4);
+        comecar = true;
     }
 
     public void AtualizaSuperContadorTxt(int quant)
@@ -74,7 +103,8 @@ public class GameController : Singleton<GameController>
 
     public void AtivaOuDesativaGameOver(bool ativar)
     {
-        gameOver.SetActive(ativar);
+        gameOver.GetComponent<BoxCollider2D>().enabled=ativar;
+        gameOver.GetComponent<Animator>().SetBool("Pisca", ativar);
     }
 
     public void EmbolharTela(bool embolhar)
@@ -119,6 +149,20 @@ public class GameController : Singleton<GameController>
             case "Elemental":
                 yield return new WaitForSeconds(2);
                 fundoPreto.StartCoroutine(fundoPreto.AcabaCena(objAlvo, cenaNome));
+                break;
+            case "Eletrico":
+                yield return new WaitForSeconds(2);
+                fundoPreto.StartCoroutine(fundoPreto.AcabaCena(objAlvo, cenaNome));
+                break;
+        }
+    }
+
+    public void QualCamera(string nome)
+    {
+        switch (nome)
+        {
+            case "Normal":
+                cameraNormal.Priority = 10;
                 break;
         }
     }

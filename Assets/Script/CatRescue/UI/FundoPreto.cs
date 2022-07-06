@@ -8,7 +8,7 @@ public class FundoPreto : MonoBehaviour
     [SerializeField] private GameObject fundoPreto;
     [SerializeField] private GameObject fundoPretoMask;
     private Transform alvo;
-    private Vector3 valores = new Vector3(0.5f,0.5f,1f);
+    private Vector3 valores = new Vector3(1f,1f,1f);
 
     private void Start()
     {
@@ -25,6 +25,7 @@ public class FundoPreto : MonoBehaviour
         while(mask.transform.localScale.x <= 200)
         {
             mask.transform.localScale += valores;
+            valores += new Vector3(0.01f,0.01f,0.01f);
             yield return new WaitForSeconds(0.001f);
         }
         Destroy(fundoPretoInicial);
@@ -42,6 +43,7 @@ public class FundoPreto : MonoBehaviour
         while (mask.transform.localScale.x >= 0)
         {
             mask.transform.localScale -= valores;
+            valores += new Vector3(0.01f, 0.01f, 0.01f);
             yield return new WaitForSeconds(0.001f);
         }
         Destroy(mask);

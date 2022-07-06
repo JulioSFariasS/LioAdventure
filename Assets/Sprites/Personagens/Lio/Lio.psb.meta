@@ -936,7 +936,7 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: PeEsq
-      position: {x: 26.029776, y: -0.000015084632, z: 0}
+      position: {x: 26.029772, y: -0.000013020821, z: 0}
       rotation: {x: 0, y: 0, z: 0.0135107115, w: 0.99990875}
       length: 28.130037
       parentId: 1
@@ -1364,19 +1364,19 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: MaoDir
-      position: {x: 24.137688, y: -0.000026752045, z: 0}
-      rotation: {x: 0, y: 0, z: 0.1422112, w: 0.9898364}
-      length: 42.426697
+      position: {x: 24.137697, y: -0.000010025178, z: 0}
+      rotation: {x: 0, y: 0, z: 0.14221115, w: 0.9898364}
+      length: 42.426678
       parentId: 1
     - name: BracoDir
-      position: {x: 31.6924, y: 0.00006406542, z: 0}
-      rotation: {x: 0, y: 0, z: 0.24152733, w: 0.9703941}
-      length: 24.137693
+      position: {x: 31.692326, y: 0.000028840605, z: 0}
+      rotation: {x: 0, y: 0, z: 0.24152714, w: 0.9703941}
+      length: 24.137707
       parentId: 2
     - name: OmbroDir
       position: {x: 6.118805, y: 52.56662, z: 0}
-      rotation: {x: 0, y: 0, z: -0.4146212, w: 0.9099942}
-      length: 31.69234
+      rotation: {x: 0, y: 0, z: -0.41462097, w: 0.90999424}
+      length: 31.692362
       parentId: -1
     spriteOutline: []
     vertices:
@@ -1746,18 +1746,18 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: MaoEsq
-      position: {x: 24.22467, y: 0.0000067223755, z: 0}
-      rotation: {x: 0, y: 0, z: -0.17617111, w: 0.98435956}
-      length: 36.745853
+      position: {x: 24.224606, y: 0.000011094922, z: 0}
+      rotation: {x: 0, y: 0, z: -0.17617089, w: 0.9843597}
+      length: 36.74586
       parentId: 1
     - name: BracoEsq
-      position: {x: 33.619904, y: -0.0000007537019, z: 0}
-      rotation: {x: 0, y: 0, z: -0.24794848, w: 0.9687732}
-      length: 24.224667
+      position: {x: 33.61998, y: -0.00003892119, z: 0}
+      rotation: {x: 0, y: 0, z: -0.24794899, w: 0.9687731}
+      length: 24.224684
       parentId: 2
     - name: OmbroEsq
       position: {x: 92.832825, y: 52.56662, z: 0}
-      rotation: {x: 0, y: 0, z: 0.9138115, w: -0.40613863}
+      rotation: {x: 0, y: 0, z: 0.9138113, w: -0.40613887}
       length: 33.619915
       parentId: -1
     spriteOutline: []
@@ -2239,7 +2239,7 @@ ScriptedImporter:
     spriteBone:
     - name: PeDir
       position: {x: 27.847296, y: -0.00001684444, z: 0}
-      rotation: {x: 0, y: 0, z: 0.13185911, w: 0.99126846}
+      rotation: {x: 0, y: 0, z: 0.13185911, w: 0.9912685}
       length: 24.729042
       parentId: 1
     - name: PernaDir
@@ -3154,40 +3154,49 @@ ScriptedImporter:
       parentId: 1
     - name: PeDir
       position: {x: 27.847311, y: 0.00000039626346, z: 0}
-      rotation: {x: 0, y: 0, z: 0.13185911, w: 0.99126846}
+      rotation: {x: 0, y: 0, z: 0.13185912, w: 0.9912685}
       length: 24.729044
       parentId: 5
     - name: OmbroEsq
       position: {x: 55.87522, y: 46.960796, z: 0}
-      rotation: {x: 0, y: -0, z: 0.92904156, w: 0.36997536}
-      length: 33.61992
+      rotation: {x: 0, y: -0, z: 0.9290417, w: 0.36997515}
+      length: 33.619907
       parentId: 1
     - name: BracoEsq
-      position: {x: 33.61991, y: 0.0000049585947, z: 0}
-      rotation: {x: 0, y: 0, z: -0.24794853, w: 0.96877325}
-      length: 24.224669
+      position: {x: 33.619907, y: -0.000017862867, z: 0}
+      rotation: {x: 0, y: 0, z: -0.24794894, w: 0.9687731}
+      length: 24.224682
       parentId: 7
     - name: MaoEsq
-      position: {x: 24.22468, y: -0.0000023373505, z: 0}
-      rotation: {x: 0, y: 0, z: -0.17617106, w: 0.98435956}
+      position: {x: 24.224678, y: 0.0000017663788, z: 0}
+      rotation: {x: 0, y: 0, z: -0.17617087, w: 0.9843596}
       length: 36.745857
       parentId: 8
     - name: OmbroDir
       position: {x: 53.43607, y: -56.296364, z: 0}
-      rotation: {x: 0, y: -0, z: -0.9407155, w: 0.33919674}
-      length: 31.692335
+      rotation: {x: 0, y: -0, z: -0.9407154, w: 0.33919695}
+      length: 31.692366
       parentId: 1
     - name: BracoDir
-      position: {x: 31.692356, y: 0.000024377821, z: 0}
-      rotation: {x: 0, y: 0, z: 0.24152727, w: 0.9703941}
-      length: 24.137686
+      position: {x: 31.692347, y: 0.0000024070268, z: 0}
+      rotation: {x: 0, y: 0, z: 0.24152714, w: 0.9703941}
+      length: 24.137712
       parentId: 10
     - name: MaoDir
-      position: {x: 24.137697, y: -0.000009270105, z: 0}
-      rotation: {x: 0, y: 0, z: 0.14221124, w: 0.9898364}
+      position: {x: 24.13772, y: -0.0000022974436, z: 0}
+      rotation: {x: 0, y: 0, z: 0.14221112, w: 0.98983634}
       length: 42.426685
       parentId: 11
     parts:
+    - spritePosition:
+        x: 120
+        y: 121
+        width: 113
+        height: 94
+      spriteId: 4e9f05c1f0b005f4babf105a91396f04
+      bones: 
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 62
         y: 164

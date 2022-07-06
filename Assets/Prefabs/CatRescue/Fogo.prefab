@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 868744342286902791}
-  - component: {fileID: 2407269667800591156}
+  - component: {fileID: -3772075514981223440}
   - component: {fileID: 868744342286902788}
   - component: {fileID: 868744342286902789}
   m_Layer: 0
@@ -66,7 +66,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2407269667800591156
+--- !u!114 &-3772075514981223440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,16 +75,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 868744342286902792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e991693317f8554cac581adea0ea251, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d2007163ce717f4ab6c8feefe24e19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pontos:
-  - {x: 0.242, y: 0.471, z: 0}
-  - {x: -0.439, y: -0.012, z: 0}
-  - {x: -1.319, y: 0.529, z: 0}
-  - {x: -1.378, y: -0.716, z: 0}
-  - {x: 0.404, y: -0.739, z: 0}
-  velocidade: 0.5
+  spr: {fileID: 9131554580278153111}
+  dirPlayer: 0
 --- !u!50 &868744342286902788
 Rigidbody2D:
   serializedVersion: 4
