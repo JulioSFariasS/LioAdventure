@@ -10,7 +10,6 @@ public class MovimentoEntrePontos : MonoBehaviour
     [Header("Tipo de movimento")]
     [Tooltip("0-Livre | 1-Subir | 2-Descer")]
     [SerializeField] private int tipo;
-    private float contDelayDeMovimento;
     private Rigidbody2D rb;
     private Transform pontoAtual, pontoAntigo;
     private bool escolhendo;
@@ -22,6 +21,7 @@ public class MovimentoEntrePontos : MonoBehaviour
     {
         escolhendo = true;
         rb = GetComponent<Rigidbody2D>();
+        var controlaDelayCO = StartCoroutine(ControlaDelay());
     }
 
     private void Update()
@@ -33,19 +33,8 @@ public class MovimentoEntrePontos : MonoBehaviour
                 escolhendo = false;
             }
 
-            if (escolhendo)
-            {
-                if (contDelayDeMovimento >= delayDeMovimento)
-                {
-                    EscolhePontoNovo();
-                    escolhendo = false;
-                }
-                contDelayDeMovimento += 0.2f;
-            }
-
             if (movendo)
             {
-                contDelayDeMovimento = 0;
                 if (Vector3.Distance(rb.position, pontoFuturo.position) < 0.01f)
                 {
                     pontoAntigo = pontoAtual;
@@ -164,5 +153,23 @@ public class MovimentoEntrePontos : MonoBehaviour
     public void SetDelay(float delay)
     {
         delayDeMovimento = delay;
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator ControlaDelay()
+    {
+        yield return new WaitUntil(() => GameController.getInstance().comecar);
+
+        while (true)
+        {
+            yield return new WaitUntil(() => escolhendo);
+            yield return new WaitForSeconds(delayDeMovimento);
+            EscolhePontoNovo();
+            escolhendo = false;
+        }
     }
 }

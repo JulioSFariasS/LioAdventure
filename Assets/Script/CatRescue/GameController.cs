@@ -14,16 +14,14 @@ public class GameController : Singleton<GameController>
     public CinemachineVirtualCamera cameraNormal;
     public LioController lioController;
     public TextMeshProUGUI superContadorTxt;
-    public TextMeshProUGUI tiroContadorTxt;
-    public Slider alienVidaSlider;
     public TelaEmbolhada telaEmbolhada;
     public TelaDano telaDano;
-    public TelaConfusaController telaConfusa;
     public GameObject gameOver;
     public FundoPreto fundoPreto;
     public GameObject vitoriaPanel;
     public ParticleSystem vitoriaParticulaEsq, vitoriaParticulaDir;
     public bool comecar;
+    public int dificuldade;
 
     void Start()
     {
@@ -48,7 +46,6 @@ public class GameController : Singleton<GameController>
 
     public void AjeitaCena()
     {
-        comecar = false;
         switch (SceneManager.GetActiveScene().name)
         {
             case "AlienVerde":
@@ -76,7 +73,6 @@ public class GameController : Singleton<GameController>
 
     public IEnumerator GameOver(Transform alvo, string nomeCena)
     {
-        comecar = false;
         yield return fundoPreto.StartCoroutine(fundoPreto.AcabaCena(alvo, nomeCena));
     }
 
@@ -86,19 +82,9 @@ public class GameController : Singleton<GameController>
         comecar = true;
     }
 
-    public void AtualizaSuperContadorTxt(int quant)
+    public void AtualizaSuperContadorTxt(int quant, int quantMax)
     {
-        superContadorTxt.text = quant.ToString() +"/10";
-    }
-
-    public void AtualizaAlienVidaSlider(int quant)
-    {
-        alienVidaSlider.value = quant;
-    }
-
-    public void AtualizaTiroContadorTxt(int quant)
-    {
-        tiroContadorTxt.text = quant.ToString();
+        superContadorTxt.text = quant.ToString() +"/"+quantMax.ToString();
     }
 
     public void AtivaOuDesativaGameOver(bool ativar)
@@ -121,20 +107,6 @@ public class GameController : Singleton<GameController>
     {
         telaDano.StopAllCoroutines();
         telaDano.StartCoroutine(telaDano.ApareceESome());
-    }
-
-    public void ConfusaTela(bool confuso)
-    {
-        foreach(TelaConfusa espiral in telaConfusa.espirais)
-        {
-            espiral.StopAllCoroutines();
-
-            switch (confuso)
-            {
-                case true: espiral.StartCoroutine(espiral.SobeAlpha()); break;
-                case false: espiral.StartCoroutine(espiral.DiminuiAlpha()); break;
-            }
-        }
     }
 
     public IEnumerator DerrotaChefe(string chefe, Transform objAlvo, string cenaNome)

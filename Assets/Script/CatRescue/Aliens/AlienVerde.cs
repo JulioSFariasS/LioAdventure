@@ -89,7 +89,6 @@ public class AlienVerde : MonoBehaviour
                 break;
         }
         Flipar();
-        AtualizaHud();
     }
 
     private void FixedUpdate()
@@ -328,11 +327,6 @@ public class AlienVerde : MonoBehaviour
         }
 
         luzes.GetComponent<Animator>().SetFloat("velocidade",velocidade);
-    }
-
-    private void AtualizaHud()
-    {
-        GameController.getInstance().alienVidaSlider.value = vida;
     }
 
     public void PlaySom(string nome)

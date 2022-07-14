@@ -9,23 +9,27 @@ public class LioController : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D colisor;
 
+    [Header("Alien")]
+    [SerializeField] private Transform alien;
+
     [SerializeField] private float velocidade;
     [SerializeField] private float velocidadeBoost;
     [SerializeField] private float tempoDeBoost;
+    [SerializeField] private float cooldownDoBoost;
     [SerializeField] private float tempoDeConfusao;
     private Vector2 movimento;
     private bool vulneravel=true;
     private bool super;
     private bool preso;
-    private bool confuso;
-    private float confusoCont;
     private bool boost;
+    private bool boostLiberado;
     private Vector2 boostDir;
-    private float boostCont;
+    private bool boostUsado;
     private bool venceu;
     //private bool morreu = false;
 
     [SerializeField] private int superQuantidade;
+    [SerializeField] private int superQuantidadeMax;
     private bool superContando;
     [SerializeField] private float velocidadeDeQueda;
 
@@ -55,20 +59,33 @@ public class LioController : MonoBehaviour
     [SerializeField] private ParticleSystem boostParticulas;
     [SerializeField] private ParticleSystem fumacaParticulas;
 
-    PlayerControl controle;
-    [SerializeField] Joystick joystickTouch;
+    private PlayerControl controle;
 
     [Header("Sons")]
     [SerializeField] private AudioClip danoSom;
     [SerializeField] private AudioClip[] tiroSom = new AudioClip[2];
+
+    private Coroutine boostCO;
 
     private void Awake()
     {
         controle = new PlayerControl();
     }
 
+    private void OnEnable()
+    {
+        controle.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controle.Disable();
+    }
+
     private void Start()
     {
+        boostLiberado = true;
+        SetQuantidadeMax();
         tiroContador = tiroDelay;
         StartComponentes();
         StartCores();
@@ -87,14 +104,7 @@ public class LioController : MonoBehaviour
                 StopAllCoroutines();
             }
 
-            if (GameController.getInstance().mobile)
-            {
-                PegaInputTouch();
-            }
-            else
-            {
-                PegaInput();
-            }
+            PegaInput();
 
             if (!boost)
             {
@@ -102,22 +112,9 @@ public class LioController : MonoBehaviour
             }
             else
             {
-                boostCont += Time.deltaTime;
-                if (boostCont > tempoDeBoost)
+                if (!boostUsado)
                 {
-                    boost = false;
-                    boostCont = 0;
-                }
-            }
-
-            if (confuso)
-            {
-                confusoCont += Time.deltaTime;
-                if (confusoCont > tempoDeConfusao)
-                {
-                    confuso = false;
-                    confusoCont = 0;
-                    GameController.getInstance().ConfusaTela(false);
+                    StartCoroutine(Boost());
                 }
             }
 
@@ -138,6 +135,7 @@ public class LioController : MonoBehaviour
         AtualizaHud();
     }
 
+
     private void FixedUpdate()
     {
         if (super)
@@ -145,25 +143,13 @@ public class LioController : MonoBehaviour
             switch (preso)
             {
                 case false:
-                    if (!confuso)
+                    switch (boost)
                     {
-                        switch (boost)
-                        {
-                            case false: rb.velocity = movimento.normalized * velocidade * Time.fixedDeltaTime; break;
-                            case true: rb.velocity = boostDir.normalized * velocidadeBoost * Time.fixedDeltaTime; break;
-                        }
-                    }
-                    else
-                    {
-                        rb.velocity = -movimento.normalized * velocidade * Time.fixedDeltaTime;
-                        switch (boost)
-                        {
-                            case false: rb.velocity = -movimento.normalized * velocidade * Time.fixedDeltaTime; break;
-                            case true: rb.velocity = -boostDir.normalized * velocidadeBoost * Time.fixedDeltaTime; break;
-                        }
+                        case false: rb.velocity = movimento.normalized * velocidade * Time.fixedDeltaTime; break;
+                        case true: rb.velocity = boostDir.normalized * velocidadeBoost * Time.fixedDeltaTime; break;
                     }
                     break;
-                case true: 
+                case true:
                     rb.velocity = movimento.normalized * 0f * Time.fixedDeltaTime;
                     rb.MoveRotation(rb.rotation + 360 * Time.fixedDeltaTime);
                     break;
@@ -210,17 +196,6 @@ public class LioController : MonoBehaviour
                 StartCoroutine(Prender());
                 GameController.getInstance().EmbolharTela(true);
             }
-            else
-            if (collision.CompareTag("Confusao") && !confuso && super && vulneravel)
-            {
-                confuso = true;
-                GameController.getInstance().ConfusaTela(true);
-
-                if (collision.name.Substring(0, 12) == "BichoFuracao")
-                {
-                    collision.GetComponent<Animator>().Play("FuracaoDestroi");
-                }
-            }
         }
     }
 
@@ -234,10 +209,13 @@ public class LioController : MonoBehaviour
 
     private void TomaDano()
     {
+        AudioManager.instance.CriaTocaEDestroi(danoSom, 1, 1, false);
         vulneravel = false;
         StartCoroutine(PiscaBranco());
         GameController.getInstance().DanoTela();
+
         superQuantidade -= 5;
+
         danoParticulas.Play();
 
         if (preso)
@@ -251,6 +229,18 @@ public class LioController : MonoBehaviour
         }
     }
 
+    private void SetQuantidadeMax()
+    {
+        switch (GameController.getInstance().dificuldade)
+        {
+            case 0: superQuantidadeMax = 20; break;
+            case 1: superQuantidadeMax = 15; break;
+            case 2: superQuantidadeMax = 10; break;
+            case 3: superQuantidadeMax = 5; break;
+        }
+        superQuantidade = superQuantidadeMax;
+    }
+
     private void SuperForma()
     {
         if (superQuantidade < 0)
@@ -258,9 +248,9 @@ public class LioController : MonoBehaviour
             superQuantidade = 0;
         }
 
-        if (superQuantidade > 10)
+        if (superQuantidade > superQuantidadeMax)
         {
-            superQuantidade = 10;
+            superQuantidade = superQuantidadeMax;
         }
 
         
@@ -268,6 +258,8 @@ public class LioController : MonoBehaviour
         {
             super = true;
             SpritePreta();
+            vulneravel = false;
+            StartCoroutine(PiscaBranco());
             anim.SetBool("Super",true);
             rb.isKinematic = true;
         }
@@ -303,16 +295,36 @@ public class LioController : MonoBehaviour
 
     private void Flip()
     {
-        if(movimento.x>0f)
+        if (transform.position.x < alien.position.x)
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
         else
-        if (movimento.x < 0f)
+        if (transform.position.x > alien.position.x)
             transform.eulerAngles = new Vector3(0, 180, transform.eulerAngles.z);
 
     }
 
+    private IEnumerator Boost()
+    {
+        boostUsado = true;
+        vulneravel = false;
+        boostLiberado = false;
+        yield return new WaitForSeconds(tempoDeBoost);
+        boost = false;
+        boostUsado = false;
+        vulneravel = true;
+        StartCoroutine(BoostCD());
+    }
+
+    private IEnumerator BoostCD()
+    {
+        yield return new WaitForSeconds(cooldownDoBoost);
+        boostLiberado = true;
+    }
+
     private void PegaInput()
     {
+        movimento = controle.Gameplay.Move.ReadValue<Vector2>();
+        /*
         if (Controle.left)
         {
             movimento.x = -1;
@@ -340,7 +352,7 @@ public class LioController : MonoBehaviour
         {
             movimento.y = 0;
         }
-
+        */
         if(Controle.attack && super && !preso &&!boost)
         {
             tiroContador += Time.deltaTime;
@@ -356,50 +368,15 @@ public class LioController : MonoBehaviour
             tiroContador = tiroDelay;
         }
 
-        if(Controle.jumpDown && !boost && movimento!=Vector2.zero && super)
+        if(Controle.jumpDown && !boost && movimento!=Vector2.zero && super && boostLiberado)
         {
             boost = true;
-            boostCont = 0;
-        }
-    }
-
-    private void PegaInputTouch()
-    {
-        movimento.x = joystickTouch.Horizontal;
-        movimento.y = joystickTouch.Vertical;
-    }
-
-    public void AtiraTouch()
-    {
-        if (super && !preso)
-        {
-            tiroContador += Time.deltaTime;
-            if (tiroContador >= tiroDelay)
-            {
-                Atirar();
-                tiroContador = 0;
-            }
-        }
-    }
-
-    public void ParaAtiraTouch()
-    {
-            tiroContador = tiroDelay;
-    }
-
-    public void BoostTouch()
-    {
-        if (!boost && movimento != Vector2.zero && super)
-        {
-            boost = true;
-            boostCont = 0;
         }
     }
 
     private void AtualizaHud()
     {
-        GameController.getInstance().AtualizaSuperContadorTxt(superQuantidade);
-        GameController.getInstance().AtualizaTiroContadorTxt(tiroQuantidade);
+        GameController.getInstance().AtualizaSuperContadorTxt(superQuantidade, superQuantidadeMax);
     }
 
     private void StartComponentes()
@@ -548,7 +525,6 @@ public class LioController : MonoBehaviour
     {
         //SpriteBranca();
         //ResetDeCores();
-        AudioManager.instance.CriaTocaEDestroi(danoSom, 1, 1, false);
 
         for (int i = 0; i < 5; i++)
         {
@@ -613,7 +589,14 @@ public class LioController : MonoBehaviour
         while (superQuantidade > 0)
         {
             superQuantidade -= 1;
-            yield return new WaitForSeconds(1);
+            switch (GameController.getInstance().dificuldade)
+            {
+                case 0: yield return new WaitForSeconds(2f); break;
+                case 1: yield return new WaitForSeconds(1.5f); break;
+                case 2: yield return new WaitForSeconds(1); break;
+                case 3: yield return new WaitForSeconds(1); break;
+            }
+
         }
         superContando = false;
     }

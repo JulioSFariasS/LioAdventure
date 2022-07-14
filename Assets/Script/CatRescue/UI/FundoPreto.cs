@@ -18,6 +18,7 @@ public class FundoPreto : MonoBehaviour
 
     public IEnumerator IniciaCena(Transform obj)
     {
+        GameController.getInstance().comecar = false;
         alvo = obj;
         var mask = Instantiate(fundoPretoMask, alvo.position, Quaternion.identity);
         mask.transform.localScale = Vector3.zero;
@@ -26,7 +27,7 @@ public class FundoPreto : MonoBehaviour
         {
             mask.transform.localScale += valores;
             valores += new Vector3(0.01f,0.01f,0.01f);
-            yield return new WaitForSeconds(0.001f);
+            yield return null;
         }
         Destroy(fundoPretoInicial);
         Destroy(mask);
@@ -44,10 +45,11 @@ public class FundoPreto : MonoBehaviour
         {
             mask.transform.localScale -= valores;
             valores += new Vector3(0.01f, 0.01f, 0.01f);
-            yield return new WaitForSeconds(0.001f);
+            yield return null;
         }
         Destroy(mask);
         yield return new WaitForSeconds(1);
+        GameController.getInstance().comecar = false;
         GameController.getInstance().StartCoroutine(GameController.getInstance().MudaCena(cenaNome));
     }
 }

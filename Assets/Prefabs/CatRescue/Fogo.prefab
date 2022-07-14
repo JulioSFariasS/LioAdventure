@@ -4932,7 +4932,7 @@ GameObject:
   - component: {fileID: 9096877474224791959}
   - component: {fileID: 9131554580278153111}
   - component: {fileID: 3083394635595765006}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

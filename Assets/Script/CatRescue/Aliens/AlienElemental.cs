@@ -96,7 +96,6 @@ public class AlienElemental : MonoBehaviour
             Flipar();
         }
         
-        AtualizaHud();
     }
 
     private void FixedUpdate()
@@ -291,11 +290,6 @@ public class AlienElemental : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         flutuantes = GetComponent<Flutuantes>();
-    }
-
-    private void AtualizaHud()
-    {
-        GameController.getInstance().alienVidaSlider.value = vida;
     }
 
     public void PlaySom(string nome)
