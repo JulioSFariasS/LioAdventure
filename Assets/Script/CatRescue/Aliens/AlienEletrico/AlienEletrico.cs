@@ -34,7 +34,7 @@ public class AlienEletrico : MonoBehaviour
             morreu = false;
             StopAllCoroutines();
             movimento.enabled = false;
-            GameController.getInstance().StartCoroutine(GameController.getInstance().DerrotaChefe("Eletrico", transform, "AlienEletrico"));
+            GameController.getInstance().StartCoroutine(GameController.getInstance().DerrotaChefe("Eletrico", transform, "AlienRosa"));
             //anim.SetTrigger("Morre");
         }
     }

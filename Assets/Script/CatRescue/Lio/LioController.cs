@@ -168,7 +168,7 @@ public class LioController : MonoBehaviour
         {
             if (collision.name == "EstrelaRosa")
             {
-                tiroQuantidade++;
+                superQuantidade += 1;
                 TocarSom(collision.GetComponent<AudioSource>());
                 Destroy(collision.gameObject);
             }

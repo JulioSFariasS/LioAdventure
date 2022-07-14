@@ -5,21 +5,10 @@ using UnityEngine;
 public class DiminuiObj : MonoBehaviour
 {
     public float tempoParaSumir;
-    public bool movimenta;
-    public Vector3 direcao;
-    public float velocidadeDeMovimento;
 
     private void Start()
     {
         StartCoroutine(DiminuiExclui());
-    }
-
-    void FixedUpdate()
-    {
-        if (movimenta)
-        {
-            transform.position += direcao * velocidadeDeMovimento * Time.deltaTime;
-        }
     }
 
     public IEnumerator DiminuiExclui() 

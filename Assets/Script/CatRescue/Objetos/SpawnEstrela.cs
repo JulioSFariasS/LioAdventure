@@ -24,6 +24,7 @@ public class SpawnEstrela : MonoBehaviour
                 else
                     quantidade = 2;
                 break;
+            case "AlienRosa": quantidade = 3; break;
         }
         
         Vector3 posAtual = transform.position;
@@ -44,6 +45,11 @@ public class SpawnEstrela : MonoBehaviour
                     objPreto = Instantiate(estrelaPreta, posAtual, Quaternion.identity);
                     objPreto.GetComponent<MovimentoEntrePontos>().pontoFuturo = pontos.pontosDeMovimento[Random.Range(0, pontos.pontosDeMovimento.Length)].transform;
                     objPreto.GetComponent<MovimentoEntrePontos>().movendo = true;
+                    break;
+
+                case "AlienRosa":
+
+                    objPreto = Instantiate(estrelaPreta, transform.position, Quaternion.identity);
                     break;
             }
 

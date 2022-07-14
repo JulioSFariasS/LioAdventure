@@ -11052,6 +11052,7 @@ GameObject:
   - component: {fileID: 708315821}
   - component: {fileID: 708315820}
   - component: {fileID: 708315819}
+  - component: {fileID: 708315822}
   m_Layer: 0
   m_Name: AlienRosa
   m_TagString: Untagged
@@ -11076,7 +11077,7 @@ MonoBehaviour:
   posBase: {fileID: 813341159}
   horizontal: 0
   basePresa: 0
-  stopContaTempo: 1
+  stopContaTempo: 0
 --- !u!50 &708315820
 Rigidbody2D:
   serializedVersion: 4
@@ -11113,8 +11114,21 @@ Transform:
   - {fileID: 1888694342}
   - {fileID: 813341159}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &708315822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708315818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da5b6ce7d611884c85d586d43202da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  estrelaPreta: {fileID: 8512832466232325795, guid: bc1db38a37a9bec40a2ccba72f04ccce, type: 3}
 --- !u!1 &757483368
 GameObject:
   m_ObjectHideFlags: 3
@@ -11421,7 +11435,7 @@ MonoBehaviour:
   posBase: {fileID: 1675752740}
   horizontal: 1
   basePresa: 0
-  stopContaTempo: 1
+  stopContaTempo: 0
 --- !u!50 &813341161
 Rigidbody2D:
   serializedVersion: 4
@@ -21720,51 +21734,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1341760184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1341760186}
-  - component: {fileID: 1341760185}
-  m_Layer: 0
-  m_Name: SpawnEstrela
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1341760185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341760184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da5b6ce7d611884c85d586d43202da6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  estrelaPreta: {fileID: 5131019827708637428, guid: 3b69b7d6a5b88e14c841f96dea8d0d40, type: 3}
---- !u!4 &1341760186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341760184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.744, y: -0.082, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403742007
 GameObject:
   m_ObjectHideFlags: 0
@@ -23068,7 +23037,7 @@ MonoBehaviour:
   vitoriaParticulaEsq: {fileID: 0}
   vitoriaParticulaDir: {fileID: 0}
   comecar: 0
-  dificuldade: 1
+  dificuldade: 2
 --- !u!4 &2054479266
 Transform:
   m_ObjectHideFlags: 0
