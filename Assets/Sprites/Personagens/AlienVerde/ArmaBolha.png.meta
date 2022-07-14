@@ -66,6 +66,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -460,6 +461,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      ArmaBolha_3: 4021833288090268768
+      ArmaBolha_11: 4186451313323428868
+      ArmaBolha_0: -8949008569056350177
+      ArmaBolha_7: -8961756141669703493
+      ArmaBolha_13: 4553905632298796580
+      ArmaBolha_1: -6650167324358217597
+      ArmaBolha_2: 1710630504613536186
+      ArmaBolha_12: 4182896985705638733
+      ArmaBolha_10: 6597813599000587689
+      ArmaBolha_8: -6763736628153784591
+      ArmaBolha_9: -6785197647365584658
+      ArmaBolha_6: 4608180158254526758
+      ArmaBolha_5: 9015079849975679020
+      ArmaBolha_4: -8342142964735058673
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

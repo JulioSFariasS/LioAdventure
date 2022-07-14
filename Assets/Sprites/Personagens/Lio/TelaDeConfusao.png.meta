@@ -84,6 +84,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -604,6 +605,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      TelaDeConfusao_14: -3794162435149800197
+      TelaDeConfusao_17: -2943634467360244397
+      TelaDeConfusao_15: 1228581565545977948
+      TelaDeConfusao_16: -4321173333256399107
+      TelaDeConfusao_11: 2312395350956043498
+      TelaDeConfusao_3: -3818769978787965552
+      TelaDeConfusao_1: -740303986523696816
+      TelaDeConfusao_13: -7944238367250837655
+      TelaDeConfusao_8: 3598817791984820321
+      TelaDeConfusao_4: 8073982428638203201
+      TelaDeConfusao_19: 4541504957099013886
+      TelaDeConfusao_5: 181099965025980100
+      TelaDeConfusao_6: -7339930468845772650
+      TelaDeConfusao_7: -9197331424125592814
+      TelaDeConfusao_0: 3126510861107164259
+      TelaDeConfusao_18: -1954047422811088365
+      TelaDeConfusao_2: 1388770474486226294
+      TelaDeConfusao_9: -8906127051174590601
+      TelaDeConfusao_12: -1549744150634786748
+      TelaDeConfusao_10: -2646202540964004333
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -84,6 +84,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -604,6 +605,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      AlienTerrestre_2: -7253781768243547811
+      AlienVerdeTerrestre_5: -3448869265597928194
+      AlienVerdeTerrestre_4: -1413731020063377148
+      AlienVerdeTerrestre_8: 4024294406167894333
+      AlienVerdeTerrestre_3: -5367652385348522750
+      AlienTerrestre_3: -181505299345106401
+      AlienVerdeTerrestre_2: 7901067018413582110
+      AlienVerdeTerrestre_12: 5063386435217736705
+      AlienVerdeTerrestre_7: 5860911238087666515
+      AlienVerdeTerrestre_9: 4004228635230227055
+      AlienVerdeTerrestre_1: -1461388675141260322
+      AlienVerdeTerrestre_11: -8996268986122560250
+      AlienVerdeTerrestre_10: -5131887557376852272
+      AlienTerrestre_0: 3510074870095133023
+      AlienVerdeTerrestre_6: -154508529636240210
+      AlienTerrestre_4: 7012176286760113532
+      AlienTerrestre_1: -3545380465566601667
+      AlienVerdeTerrestre_13: -5219505798937081674
+      AlienVerdeTerrestre_0: -7102522923352398258
+      AlienVerdeTerrestre_14: 1166512019601405867
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

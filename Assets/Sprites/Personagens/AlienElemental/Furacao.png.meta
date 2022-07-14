@@ -45,6 +45,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -292,6 +293,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Furacao_5: 3548484576261299834
+      Furacao_3: 2765403191924813633
+      Furacao_2: -5955454263487291255
+      Furacao_4: 3750832510171302275
+      Furacao_6: -791721596131186385
+      Furacao_1: 889860692079359178
+      Furacao_0: 1027074963562094982
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

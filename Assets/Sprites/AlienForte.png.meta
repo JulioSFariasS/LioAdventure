@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -340,6 +341,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      AlienForte_0: -8320654465548468892
+      AlienForte_3: 1412549586057929540
+      AlienForte_1: 4181329155839415970
+      AlienForte_7: -5079951990445994958
+      AlienForte_5: 8746163905607422032
+      AlienForte_6: 8339649734619224848
+      AlienForte_2: -3825533353734281164
+      AlienForte_8: 4008254785996149166
+      AlienForte_4: -7241413307476465652
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

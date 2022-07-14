@@ -48,6 +48,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -316,6 +317,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Bolha_7: -5029124853866605047
+      Bolha_3: 5704190422812891215
+      Bolha_5: 4688130189698403146
+      Bolha_2: -4491664248679491068
+      Bolha_0: -1457559781235916634
+      Bolha_1: -6325001362624793029
+      Bolha_4: -6868938856345764232
+      Bolha_6: 1763326934910808363
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

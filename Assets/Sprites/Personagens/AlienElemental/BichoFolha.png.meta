@@ -57,6 +57,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -388,6 +389,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      BichoFolha_1: -7572375689953373924
+      BichoFolha_8: -5146554481313220601
+      BichoFolha_6: 605793933281890652
+      BichoFolha_9: -7575174158677868556
+      BichoFolha_2: 8486337717262761691
+      BichoFolha_3: -1355988453362516625
+      BichoFolha_10: 2846693426387348224
+      BichoFolha_7: 4282864237781034658
+      BichoFolha_5: 2695912946621673418
+      BichoFolha_4: 4849608627186550246
+      BichoFolha_0: -786714832087793322
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

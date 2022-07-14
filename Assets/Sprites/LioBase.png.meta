@@ -114,6 +114,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -846,6 +847,37 @@ TextureImporter:
     secondaryTextures:
     - texture: {fileID: 2800000, guid: 05bf55de3f6e3834298ae29e6f820fae, type: 3}
       name: _Emission
+    nameFileIdTable:
+      LioBase_17: 6986384585752052230
+      LioBase_3: -1987420723495079066
+      LioBase_7: 3830288167621119744
+      LioBase_14: -4920687658596259499
+      LioBase_20: -1358708584108902475
+      LioBase_22: -7026351560354613193
+      LioBase_18: -205978617879805854
+      LioBase_26: -6116745408798331781
+      LioBase_24: 6558492815150965509
+      LioBase_11: -1251962887373313044
+      LioBase_25: -3122490049833556752
+      LioBase_28: 1863256571959381347
+      LioBase_1: -2650972416155825772
+      LioBase_8: -3543447327409287606
+      LioBase_15: 4096122364123108345
+      LioBase_19: 2066933231901177639
+      LioBase_5: 1191738621349668365
+      LioBase_27: -9023139083727207506
+      LioBase_12: -8523943883216036042
+      LioBase_0: -4459288313306805166
+      LioBase_10: 7762007178549280129
+      LioBase_13: -5607309792825738375
+      LioBase_23: -3879971591578114984
+      LioBase_9: 1083510437670015740
+      LioBase_6: 5036271863678460333
+      UmPixel: 2894106607777555201
+      LioBase_16: -2803305836656690478
+      LioBase_21: -8630476400698583941
+      LioBase_4: 7263322956866336674
+      LioBase_2: 243401819126438039
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

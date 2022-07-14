@@ -68,6 +68,16 @@ public class GameController : Singleton<GameController>
                 fundoPreto.StartCoroutine(fundoPreto.IniciaCena(lioController.transform));
                 gameOver = Camera.main.transform.GetChild(0).gameObject;
                 break;
+            case "AlienRosa":
+
+                if (mobile)
+                    canvasJoy.SetActive(true);
+
+                StartCoroutine(ComecarAcoes());
+                Debug.Log("alien rosa");
+                fundoPreto.StartCoroutine(fundoPreto.IniciaCena(lioController.transform));
+                gameOver = Camera.main.transform.GetChild(0).gameObject;
+                break;
         }
     }
 

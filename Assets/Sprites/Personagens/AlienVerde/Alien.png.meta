@@ -138,6 +138,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1036,6 +1037,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Alien_32: 2745749646153867625
+      Alien_34: 7316142286413364585
+      Alien_11: -7231409721203779524
+      Alien_24: -8907912211246579467
+      Alien_10: 2889786350598334979
+      Alien_29: 8674147233861096952
+      Alien_31: 2068796175509941848
+      Alien_0: -2942823943379307754
+      Alien_36: 2694877950604406570
+      Alien_14: -1110578057744408522
+      Alien_20: 3729907122324299337
+      Alien_1: -3620427700229666998
+      Alien_5: 1385746534647897815
+      Alien_2: -6064842696636490183
+      Alien_6: 8333473628666599317
+      Alien_4: 5616865980521103154
+      Alien_27: -5828956411989909528
+      Alien_23: 3047389529809505336
+      Alien_7: -975394636615239872
+      Alien_9: 50713712200906357
+      Alien_16: 3617610833811027095
+      Alien_8: 3984287553000486061
+      Alien_18: -7980313207162279018
+      Alien_33: -3029794090923778140
+      Alien_15: 9015844012007861791
+      Alien_37: 8291675502419793986
+      Alien_28: 470504684871427183
+      Alien_21: -5385498315858744364
+      Alien_12: 6262224847846906635
+      Alien_13: 2810330045207823116
+      Alien_19: -7169919473789208075
+      Alien_17: 414379534132182895
+      Alien_3: 568312574599528830
+      Alien_22: 2753544069241496063
+      Alien_26: 7761841643099638057
+      Alien_35: 4580804805073225262
+      Alien_30: 7412184924202028481
+      Alien_25: 1626555932937564865
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

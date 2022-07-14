@@ -122,7 +122,6 @@ public class AlienElemental : MonoBehaviour
 
     private IEnumerator EscolhendoAcaoFolhas()
     {
-        yield return new WaitForSeconds(3f);
         anim.SetInteger("Ataque", 0);
         anim.SetTrigger("Troca");
         yield return new WaitForSeconds(1.5f);

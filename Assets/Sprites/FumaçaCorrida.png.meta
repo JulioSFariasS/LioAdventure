@@ -36,6 +36,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -220,6 +221,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      "Fuma\xE7aCorrida_3": -2612635940649244651
+      "Fuma\xE7aCorrida_2": 4710641191695548406
+      "Fuma\xE7aCorrida_0": 2175555642551230464
+      "Fuma\xE7aCorrida_1": 6138683852552220941
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

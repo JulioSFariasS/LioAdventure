@@ -65,7 +65,8 @@ public class LioController : MonoBehaviour
     [SerializeField] private AudioClip danoSom;
     [SerializeField] private AudioClip[] tiroSom = new AudioClip[2];
 
-    private Coroutine boostCO;
+    [Header("Objetos para controlar")]
+    [SerializeField] private Animator dashIndicator;
 
     private void Awake()
     {
@@ -305,6 +306,7 @@ public class LioController : MonoBehaviour
 
     private IEnumerator Boost()
     {
+        dashIndicator.SetTrigger("Iniciar");
         boostUsado = true;
         vulneravel = false;
         boostLiberado = false;
