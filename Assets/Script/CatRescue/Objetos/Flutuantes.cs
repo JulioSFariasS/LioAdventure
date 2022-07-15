@@ -51,7 +51,7 @@ public class Flutuantes : MonoBehaviour
             }
         }
 
-        rb.MovePosition(position);
+        rb.MovePosition(Vector2.MoveTowards(transform.position, position, 1 * Time.deltaTime));
     }
 
     public Transform GetBase()

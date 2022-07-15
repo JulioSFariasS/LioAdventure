@@ -52,6 +52,21 @@ public class ObjMovel : MonoBehaviour
         iniciado = true;
     }
 
+    public void SetVelocidade(float velocidade)
+    {
+        this.velocidade = velocidade;
+    }
+
+    public void SetMovimento(Vector2 movimento)
+    {
+        this.movimento = movimento;
+    }
+
+    public Vector2 GetMovimento()
+    {
+        return movimento;
+    }
+
     private void FixedUpdate()
     {
         if (iniciado)

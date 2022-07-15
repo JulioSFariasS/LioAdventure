@@ -66,7 +66,7 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 0
-  androidUseSwappy: 1
+  androidUseSwappy: 0
   androidBlitType: 0
   androidResizableWindow: 0
   androidDefaultWindowWidth: 1920
@@ -153,10 +153,10 @@ PlayerSettings:
   targetPixelDensity: 30
   resolutionScalingMode: 0
   resetResolutionOnWindowResize: 0
-  androidSupportedAspectRatio: 2
+  androidSupportedAspectRatio: 0
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.DefaultCompany.LioAdventure
+    Android: com.DefaultCompany.LioCatRescue
     Standalone: com.DefaultCompany.LioAdventure
   buildNumber:
     Standalone: 0
@@ -275,7 +275,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 2f01832d0894d35449b71c8965174cc3, type: 3}
+      m_Icon: {fileID: 2800000, guid: 9058df881d64c514db9c2827403813ee, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

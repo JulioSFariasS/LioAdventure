@@ -136,6 +136,10 @@ public class GameController : Singleton<GameController>
                 yield return new WaitForSeconds(2);
                 fundoPreto.StartCoroutine(fundoPreto.AcabaCena(objAlvo, cenaNome));
                 break;
+            case "Rosa":
+                yield return new WaitForSeconds(2);
+                fundoPreto.StartCoroutine(fundoPreto.AcabaCena(objAlvo, cenaNome));
+                break;
         }
     }
 
